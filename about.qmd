@@ -5,4 +5,4 @@ about:
   template: jolla
 ---
 
-About this blog
+This is a blog for my explorations and experiments with LLMs in the COMM 4190 class at UPenn. I'm hoping to focus on LLMs in social contexts like on social media apps and the implications of this kind of work.
