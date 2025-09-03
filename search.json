@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "My Explorations with LLMs",
+    "title": "My Explorations with LLMs in Social Contexts",
     "section": "",
     "text": "A test post\n\n\n\nLLMs\n\nprompting\n\nlogic\n\n\n\nAn example post from a Jupyter notebook\n\n\n\n\n\nFeb 2, 2024\n\n\nAn LLM User\n\n\n\n\n\nNo matching items"
   },
@@ -25,6 +25,6 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this blog"
+    "text": "This is a blog for my explorations and experiments with LLMs in the COMM 4190 class at UPenn. I’m hoping to focus on LLMs in social contexts like on social media apps and the implications of this kind of work."
   }
 ]
