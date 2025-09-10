@@ -1,0 +1,34 @@
+Speaker 1
+Code, testing, and dev infra should be prioritized over comprehensive documentation.
+
+
+Speaker 2
+I see where you're coming from, as code, testing, and well-established development infrastructure are undeniably vital to a project's success. They are the backbone that ensures the application runs effectively, is bug-free, and can be built and deployed efficiently. 
+
+However, comprehensive documentation cannot be overlooked. It serves several purposes: onboarding new developers, making sure code is maintainable, and facilitating collaboration. Without it, even the most well-written code can become a tangled mess over time, especially as teams and projects grow. 
+
+In fact, I would argue that a well-documented codebase can increase the efficiency of coding and testing efforts. For instance, when bugs arise, having easy-to-understand documentation can speed up troubleshooting and fix deployment times. Do you think projects might face significant long-term challenges without well-maintained documentation?
+
+
+Speaker 1
+You raise valid points about the critical role of documentation in onboarding, maintenance, and collaboration. However, I want to clarify that prioritizing code, testing, and infrastructure doesn't mean we are undervaluing documentation entirely. In highly dynamic environments, focusing on the code itself, alongside robust testing, often ensures that a project remains adaptable and evolves according to new requirements.
+
+That said, documentation acts as a roadmap, reducing dependency on individuals, which can be crucial in retaining knowledge even if people transition off the team. It's true, without it, very capable code and systems can degrade in usability and become more challenging to manage long-term. 
+
+A balanced approach might be most effective: prioritize the "living" aspects of a project that drive immediate delivery and performance while iteratively improving documentation to ensure longevity and coherence. Do you think a more iterative documentation strategy could work, or would it risk being perpetually deprioritized?
+
+
+Speaker 2
+An iterative approach to documentation could indeed be successful if implemented carefully. It aligns well with agile methodologies, emphasizing flexibility and continuous improvement. By integrating documentation updates into regular sprints or reviews, you can prevent it from becoming an overwhelming or neglected task. 
+
+The risk of deprioritization is real, especially in fast-paced environments where delivery pressures dominate. One way to mitigate this is to consider documentation as an integral part of the definition of "done" for each task or feature. This way, documentation evolves alongside code and testing, reducing the likelihood of it being sidelined. 
+
+What are your thoughts on embedding documentation tasks in the definition of "done" to maintain focus without slowing down development?
+
+
+Speaker 1
+Embedding documentation tasks in the definition of "done" is a practical strategy that aligns the team's priorities with both immediate development needs and long-term project sustainability. This approach ensures that documentation isn't an afterthought but a fundamental component of the development process, allowing it to evolve organically with code and features.
+
+By integrating documentation into each sprint or task, you create a living document that reflects the current state of the project, making it more meaningful and actionable. However, it's crucial to balance the depth of documentation with the need to maintain development velocity. It might be more efficient to focus on key areas—like APIs, core logic, or complex algorithms—where clarity is most needed.
+
+Moreover, regular documentation reviews can be scheduled, much like code reviews, to ensure consistency and completeness. This helps mitigate the risk of technical debt related to documentation. Do you think teams might resist this change due to the additional workload, and how could we encourage adoption without feeling it's a burden?
