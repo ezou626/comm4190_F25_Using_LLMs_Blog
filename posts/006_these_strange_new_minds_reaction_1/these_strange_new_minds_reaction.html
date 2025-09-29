@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>My Explorations with LLMs in Social Contexts</title>
+<title>What It’s About – My Explorations with LLMs in Social Contexts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,29 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0b37c64f34216b628666a8dac638b53b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0b37c64f34216b628666a8dac638b53b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,79 +103,21 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">My Explorations with LLMs in Social Contexts</span>
     </a>
   </div>
@@ -153,7 +128,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -176,13 +151,13 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">My Explorations with LLMs in Social Contexts</h1>
+    <div class="quarto-title column-body">
+      <h1 class="title">What It’s About</h1>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
       
     
@@ -190,181 +165,40 @@ window.Quarto = {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Q29udmVyc2F0aW9ucw==">Conversations <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TExNcw==">LLMs <span class="quarto-category-count">(3)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1759117577465" data-listing-reading-time-sort="6" data-listing-word-count-sort="1081">
-<div class="thumbnail"><a href="./posts/004_going_to_stop_you_right_there/going_to_stop_you_right_there.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/004_going_to_stop_you_right_there/going_to_stop_you_right_there.html" class="no-external">Randomness as Interjections</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/004_going_to_stop_you_right_there/going_to_stop_you_right_there.html" class="no-external">
-We’re going to try to continue improving on the authenticity and naturalness of the conversations we’re generating. One issue with LLM conversations is how structured they…
-</a></div>
+<div id="8c7d25af-a503-418c-8fda-d8cc34888daf" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>title: My Thoughts on These Strange New Minds</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>description: <span class="st">"Intro &amp; Section 1"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>author: <span class="st">"Eric Zou"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>date: <span class="st">"9/19/2025"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>categories:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> Review</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="metadata">
-<a href="./posts/004_going_to_stop_you_right_there/going_to_stop_you_right_there.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1759117577466" data-listing-reading-time-sort="5" data-listing-word-count-sort="952">
-<div class="thumbnail"><a href="./posts/005_goldfish/goldfish.html" class="no-external">
+<p>From what I’ve read so far, it seems like the book is about where large language model (LLM) technology is headed, and how it’s different from what we’ve seen before. Christopher Summerfield (the author) spends the first section explaining the development of this technology. He cites historical examples of how humans have approached trying to imitate our own thinking ability. He starts with attempted constructions of thinking machines and moves into the modern era where new discoveries in neurons and computational modeling have allowed us to train large-scale deep neural networks to learn from massive datasets and generalize on unseen cases. Along the way, he contrasts two modes of thought, one being the rationalist/logical approach to thinking that was originally championed (expressing our understanding of the world in formal rules and logic) and the other being the empricist view, in which we learn continuously from experience in a way that doesn’t restrict itself to structure from the start. In the last chapter of this section, Summerfield leads into the development of the GPT series of LLMs, which I assume leads into an exploration into this novel technology.</p>
+<section id="what-i-thought" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-thought">What I Thought</h2>
+<p>I think that the section was pretty well-written. I haven’t read much print text lately, so I don’t think it could compare to any book directly. However, I thought the narrative was engaging enough to keep me reading, which is more than I can say for some other nonfiction books that I’ve read. I thought the conflict between the rationalist and empiricist approaches in knowledge were contrasted. I think it’s interesting how the huge breakthrough in GPT began as the training of a practical deep learning system, but now in current events we’re moving back to some rationalist, structured approaches like chain-of-thought prompting in order to emulate thinking much better. Summerfield brings up chess and ice skating as examples of the rationalist vs.&nbsp;empiricist approach in our lives, and he introduces the idea that our thinking may be a mix of both. I definitely think that’s the case, though I’m not sure if I could prove that.</p>
+</section>
+<section id="reflecting" class="level2">
+<h2 class="anchored" data-anchor-id="reflecting">Reflecting</h2>
+<p>Even reading the intro of this book has made me pretty appreciative of where we’ve come from. Certainly, I’m a bit apprehensive about where we’re going with this technology and the multiple ways in which it could be misused or go haywire. At the same time, I think that with this breakthrough there’s much more that we’ll be able to do with this tool. AI might be able to help in the same way that the Internet complemented many people’s jobs and allowed so many more people to access information cheaply, enhancing people’s creativity by empowering people to understand difficult concepts without the super extensive technical backgrounds that others have.</p>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/005_goldfish/goldfish.html" class="no-external">Goldfish</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/005_goldfish/goldfish.html" class="no-external">
-I think one of the main limits we’ve been hitting with this model is the ability of LLMs to maintain an organic and consistent personality that is distinct from the others.…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/005_goldfish/goldfish.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1759117577466" data-listing-reading-time-sort="3" data-listing-word-count-sort="453">
-<div class="thumbnail"><a href="./posts/006_these_strange_new_minds_reaction_1/these_strange_new_minds_reaction.html" class="no-external">
+</section>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/006_these_strange_new_minds_reaction_1/these_strange_new_minds_reaction.html" class="no-external">What It’s About</a>
-</h3>
-<div class="delink listing-description"><a href="./posts/006_these_strange_new_minds_reaction_1/these_strange_new_minds_reaction.html" class="no-external">
-From what I’ve read so far, it seems like the book is about where large language model (LLM) technology is headed, and how it’s different from what we’ve seen before.…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/006_these_strange_new_minds_reaction_1/these_strange_new_minds_reaction.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="TExNcyUyQ0NvbnZlcnNhdGlvbnM=" data-listing-date-sort="1757635200000" data-listing-file-modified-sort="1759117577464" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="562">
-<div class="thumbnail"><a href="./posts/003_approaching_a_true_discussion/Spontaneity.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/003_approaching_a_true_discussion/Spontaneity.html" class="no-external">Spontaneity</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">LLMs</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29udmVyc2F0aW9ucw=='); return false;">Conversations</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/003_approaching_a_true_discussion/Spontaneity.html" class="no-external">
-<p>Adding randomness to an LLM conversation</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/003_approaching_a_true_discussion/Spontaneity.html" class="no-external">
-<div class="listing-date">
-Sep 12, 2025
-</div>
-<div class="listing-author">
-Eric Zou
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="TExNcyUyQ0NvbnZlcnNhdGlvbnM=" data-listing-date-sort="1757462400000" data-listing-file-modified-sort="1759117577463" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1118">
-<div class="thumbnail"><a href="./posts/002_another_llm_conversation/another_llm_conversation.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/002_another_llm_conversation/another_llm_conversation.html" class="no-external">Another LLM Conversation</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">LLMs</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29udmVyc2F0aW9ucw=='); return false;">Conversations</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/002_another_llm_conversation/another_llm_conversation.html" class="no-external">
-<p>Analyzing a conversation between two LLMs in a shared chat window</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/002_another_llm_conversation/another_llm_conversation.html" class="no-external">
-<div class="listing-date">
-Sep 10, 2025
-</div>
-<div class="listing-author">
-Eric Zou
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="TExNcyUyQ0NvbnZlcnNhdGlvbnM=" data-listing-date-sort="1757289600000" data-listing-file-modified-sort="1759117577462" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1134">
-<div class="thumbnail"><a href="./posts/001_an_llm_conversation/an_llm_conversation.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/001_an_llm_conversation/an_llm_conversation.html" class="no-external">An LLM Conversation</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">LLMs</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29udmVyc2F0aW9ucw=='); return false;">Conversations</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/001_an_llm_conversation/an_llm_conversation.html" class="no-external">
-<p>Analyzing a conversation between two LLMs in a simulated chat environment</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/001_an_llm_conversation/an_llm_conversation.html" class="no-external">
-<div class="listing-date">
-Sep 8, 2025
-</div>
-<div class="listing-author">
-Eric Zou
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
