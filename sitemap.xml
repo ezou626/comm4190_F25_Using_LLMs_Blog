@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/index.html</loc>
-    <lastmod>2025-09-20T09:30:59.453Z</lastmod>
+    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/about.html</loc>
+    <lastmod>2025-09-29T01:20:00.731Z</lastmod>
   </url>
   <url>
-    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/004_going_to_stop_you_right_there/going_to_stop_you_right_there.html</loc>
-    <lastmod>2025-09-20T09:30:59.456Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/002_another_llm_conversation/another_llm_conversation.html</loc>
-    <lastmod>2025-09-20T09:30:59.454Z</lastmod>
+    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/005_goldfish/goldfish.html</loc>
+    <lastmod>2025-09-29T01:20:00.735Z</lastmod>
   </url>
   <url>
     <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/001_an_llm_conversation/an_llm_conversation.html</loc>
-    <lastmod>2025-09-20T09:30:59.454Z</lastmod>
+    <lastmod>2025-09-29T01:20:00.731Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/index.html</loc>
+    <lastmod>2025-09-29T01:20:00.731Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/004_going_to_stop_you_right_there/going_to_stop_you_right_there.html</loc>
+    <lastmod>2025-09-29T01:20:00.734Z</lastmod>
   </url>
   <url>
     <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/003_approaching_a_true_discussion/Spontaneity.html</loc>
-    <lastmod>2025-09-20T09:30:59.455Z</lastmod>
+    <lastmod>2025-09-29T01:20:00.733Z</lastmod>
   </url>
   <url>
-    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/about.html</loc>
-    <lastmod>2025-09-20T09:30:59.453Z</lastmod>
+    <loc>https://ezou626.github.io/comm4190_F25_Using_LLMs_Blog/posts/002_another_llm_conversation/another_llm_conversation.html</loc>
+    <lastmod>2025-09-29T01:20:00.732Z</lastmod>
   </url>
 </urlset>
