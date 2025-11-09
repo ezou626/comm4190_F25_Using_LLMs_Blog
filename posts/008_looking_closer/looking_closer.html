@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Eric Zou">
+<meta name="dcterms.date" content="2025-09-24">
+<meta name="description" content="More objective analysis on LLM conversations">
 
-<title>Generating a Conversation – My Explorations with LLMs in Social Contexts</title>
+<title>Looking Closer – My Explorations with LLMs in Social Contexts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -155,14 +158,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Generating a Conversation</h1>
-                      </div>
+      <h1 class="title">Looking Closer</h1>
+                  <div>
+        <div class="description">
+          More objective analysis on LLM conversations
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">LLMs</div>
+                <div class="quarto-category">Conversations</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Eric Zou </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 24, 2025</p>
+      </div>
+    </div>
     
       
     </div>
@@ -179,312 +203,431 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="00f2ec12-4f83-4021-beb7-28e6f4236116" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>title: Looking Closer</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>description: <span class="st">"More objective analysis on LLM conversations"</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>author: <span class="st">"Eric Zou"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>date: <span class="st">"9/24/2025"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>categories:</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> LLMs</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> Conversations</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="46301a28-1c30-4ffe-82f2-2da986070a22" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as always, some boilerplate</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> FileLink, display, Markdown</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> shuffle, randint, choice, random</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> floor</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> Corpus, Speaker, Utterance</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(<span class="st">"../../../comm4190_F25/01_Introduction_and_setup/.env"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># changing the topic to make it a bit more conversational too and less of a debate</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>TOPIC <span class="op">=</span> <span class="st">"""Code, testing, and infra as a source of truth versus comprehensive documentation."""</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># we're interested in consensus</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>EVALUATION_PROMPT <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">Your objective is to analyze this conversation between a few speakers.</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st">Your response should follow this organization:</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="st">- Dynamic: Collaborative (1) vs. Competitive (10)</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="st">- Conclusiveness: Consensus (1) vs. Divergence (10)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="st">- Speaker Identity: Similarity (1) vs. Diversity (10)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">- Speaker Fluidity: Malleability (1) vs. Consistency (10)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="st">Please offer a score from 1 to 10 for each.</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="st">For each section, format your result as follows:</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="st">**[Section Name]:**</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="st">Score: [score]/10</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="st">Verdict: [a short summary]</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="st">Explanation: [reasoning with explicit examples from the conversation]</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="st">Use Markdown when convenient.</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_llm_conversation_review(conversation: <span class="bu">str</span>):</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    input_chat <span class="op">=</span> [</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"system"</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: EVALUATION_PROMPT</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: <span class="st">"Here is the transcript</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> conversation</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> <span class="st">"gpt-4o"</span>,</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">=</span> input_chat,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        store <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    display(Markdown(response.choices[<span class="dv">0</span>].message.content))</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co"># code to save the conversation</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_conversation(</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    filename: <span class="bu">str</span>,</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    conversation_history: <span class="bu">list</span>[<span class="bu">dict</span>]</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> []</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> record <span class="kw">in</span> conversation_history:</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> record[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"user"</span>:</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>            messages.append(<span class="st">"mediator:</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> record[<span class="st">"content"</span>])</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> record[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"assistant"</span>:</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>            messages.append(<span class="ss">f"</span><span class="sc">{</span>record[<span class="st">"name"</span>]<span class="sc">}</span><span class="ss">:</span><span class="ch">\n</span><span class="sc">{</span>record[<span class="st">"content"</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    conversation_transcript <span class="op">=</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>.join(messages)</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">"w"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>        f.write(conversation_transcript)</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>    display(FileLink(filename))</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conversation_transcript</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="46301a28-1c30-4ffe-82f2-2da986070a22" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as always, some boilerplate</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> FileLink, display, Markdown</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> shuffle, randint, choice, random</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> floor</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> Corpus, Speaker, Utterance</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv(<span class="st">"../../../comm4190_F25/01_Introduction_and_setup/.env"</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># changing the topic to make it a bit more conversational too and less of a debate</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>TOPIC <span class="op">=</span> <span class="st">"""Code, testing, and infra as a source of truth versus comprehensive documentation."""</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># we're interested in consensus</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>EVALUATION_PROMPT <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">Your objective is to analyze this conversation between a few speakers.</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">Your response should follow this organization:</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="st">- Dynamic: Collaborative (1) vs. Competitive (10)</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="st">- Conclusiveness: Consensus (1) vs. Divergence (10)</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="st">- Speaker Identity: Similarity (1) vs. Diversity (10)</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="st">- Speaker Fluidity: Malleability (1) vs. Consistency (10)</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="st">Please offer a score from 1 to 10 for each.</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="st">For each section, format your result as follows:</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="st">**[Section Name]:**</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="st">Score: [score]/10</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="st">Verdict: [a short summary]</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="st">Explanation: [reasoning with explicit examples from the conversation]</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="st">Use Markdown when convenient.</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_llm_conversation_review(conversation: <span class="bu">str</span>):</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    input_chat <span class="op">=</span> [</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"system"</span>,</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: EVALUATION_PROMPT</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: <span class="st">"Here is the transcript</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> conversation</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> <span class="st">"gpt-4o"</span>,</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">=</span> input_chat,</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        store <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    display(Markdown(response.choices[<span class="dv">0</span>].message.content))</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="co"># code to save the conversation</span></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_conversation(</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    filename: <span class="bu">str</span>,</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    conversation_history: <span class="bu">list</span>[<span class="bu">dict</span>]</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> []</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> record <span class="kw">in</span> conversation_history:</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> record[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"user"</span>:</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>            messages.append(<span class="st">"mediator:</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> record[<span class="st">"content"</span>])</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> record[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"assistant"</span>:</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>            messages.append(<span class="ss">f"</span><span class="sc">{</span>record[<span class="st">"name"</span>]<span class="sc">}</span><span class="ss">:</span><span class="ch">\n</span><span class="sc">{</span>record[<span class="st">"content"</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    conversation_transcript <span class="op">=</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>.join(messages)</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">"w"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> f:</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        f.write(conversation_transcript)</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    display(FileLink(filename))</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conversation_transcript</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>TransformerDecoderModel requires ML dependencies. Run 'pip install convokit[llm]' to install them.
-UnslothUtteranceSimulatorModel requires ML dependencies. Run 'pip install convokit[llm]' to install them.</code></pre>
-</div>
-</div>
+<section id="generating-a-conversation" class="level2">
+<h2 class="anchored" data-anchor-id="generating-a-conversation">Generating a Conversation</h2>
 <p>Let’s build a sufficiently long conversation so we can create a way to analyze it.</p>
-<div id="534d4cca-7f07-4351-875c-6a5602e64e02" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>NEW_SYSTEM_PROMPT <span class="op">=</span> (</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"You a participant in a conversation between experienced software engineers. "</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Keep questions minimal and only use them when necessary. "</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Please greet the other participants when you join."</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_conversation(</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    iterations: <span class="bu">int</span>, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    openai_model_id: <span class="bu">str</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    participant_count: <span class="bu">int</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    participant_personas: <span class="bu">list</span>[<span class="bu">str</span>],</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    topic: <span class="bu">str</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    system_prompt: <span class="bu">str</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    dropout_chance: <span class="bu">float</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">dict</span>]:</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    conversation_history <span class="op">=</span> [</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="ss">f"</span><span class="sc">{</span>system_prompt<span class="sc">}</span><span class="ss"> The topic is: </span><span class="sc">{</span>topic<span class="sc">}</span><span class="ss">"</span>}</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    ordering <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, participant_count <span class="op">+</span> <span class="dv">1</span>))</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    last_speaker <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> build_message(history, speaker_id, persona, message_window_size):</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        speaker_messages <span class="op">=</span> [</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            msg <span class="cf">for</span> msg <span class="kw">in</span> history </span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> msg.get(<span class="st">"name"</span>) <span class="op">==</span> speaker_id</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        ][<span class="op">-</span>message_window_size:]</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        other_messages <span class="op">=</span> [</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            msg <span class="cf">for</span> msg <span class="kw">in</span> history </span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> msg.get(<span class="st">"name"</span>) <span class="kw">not</span> <span class="kw">in</span> (<span class="va">None</span>, speaker_id)  <span class="co"># skip system, skip self</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        ][<span class="op">-</span>message_window_size:]</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        transcript <span class="op">=</span> []</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> speaker_messages:</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            transcript.append(<span class="st">"Recent messages from you:"</span>)</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>            transcript.extend(</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"- </span><span class="sc">{</span>msg[<span class="st">'content'</span>]<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> msg <span class="kw">in</span> speaker_messages</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> other_messages:</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            transcript.append(<span class="st">"</span><span class="ch">\n</span><span class="st">Recent messages from others:"</span>)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            transcript.extend(</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"- </span><span class="sc">{</span>msg<span class="sc">.</span>get(<span class="st">'name'</span>, msg[<span class="st">'role'</span>])<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>msg[<span class="st">'content'</span>]<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> msg <span class="kw">in</span> other_messages</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        transcript_str <span class="op">=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(transcript)</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> history <span class="op">+</span> [</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">"role"</span>: <span class="st">"user"</span>, </span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: (</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>speaker_id<span class="sc">}</span><span class="ss">, please share your perspective with the others and engage "</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"with their responses."</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            },</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>                <span class="st">"role"</span>: <span class="st">"assistant"</span>,</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>                <span class="st">"name"</span>: speaker_id,</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: (</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"I should remember that the following is the most current state of the conversation.</span><span class="ch">\n</span><span class="ss">"</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>transcript_str<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">"</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"I also recall my identity is </span><span class="sc">{</span>persona<span class="sc">}</span><span class="ss">."</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>        ]</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> shuffle_order(ordering: <span class="bu">list</span>[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">int</span>]:</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        first <span class="op">=</span> choice(ordering[:<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>        remaining <span class="op">=</span> [p <span class="cf">for</span> p <span class="kw">in</span> ordering <span class="cf">if</span> p <span class="op">!=</span> first]</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>        shuffle(remaining)</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [first] <span class="op">+</span> remaining</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> tqdm(<span class="bu">range</span>(iterations)):</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>        <span class="co"># shuffle ordering</span></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>            ordering <span class="op">=</span> shuffle_order(ordering)</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        <span class="co"># follow ordering</span></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> participant_id <span class="kw">in</span> ordering:</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>            <span class="co"># chance to skip speaker and avoid double speak (1984)</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> random() <span class="op">&lt;</span> dropout_chance <span class="kw">or</span> last_speaker <span class="op">==</span> participant_id:</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>            speaker_id <span class="op">=</span> <span class="ss">f"speaker_</span><span class="sc">{</span>participant_id<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>            persona <span class="op">=</span> participant_personas[participant_id <span class="op">-</span> <span class="dv">1</span>]</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>                model <span class="op">=</span> openai_model_id,</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>                messages<span class="op">=</span>build_message(conversation_history, speaker_id, persona, <span class="dv">5</span>),</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>                store <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>            message <span class="op">=</span> response.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>            conversation_history.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"name"</span>: speaker_id, <span class="st">"content"</span>: message})</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>            last_speaker <span class="op">=</span> participant_id</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conversation_history</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="534d4cca-7f07-4351-875c-6a5602e64e02" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>NEW_SYSTEM_PROMPT <span class="op">=</span> (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"You a participant in a conversation between experienced software engineers. "</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Keep questions minimal and only use them when necessary. "</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Please greet the other participants when you join."</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_conversation(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    iterations: <span class="bu">int</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    openai_model_id: <span class="bu">str</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    participant_count: <span class="bu">int</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    participant_personas: <span class="bu">list</span>[<span class="bu">str</span>],</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    topic: <span class="bu">str</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    system_prompt: <span class="bu">str</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    dropout_chance: <span class="bu">float</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">dict</span>]:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    conversation_history <span class="op">=</span> [</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="ss">f"</span><span class="sc">{</span>system_prompt<span class="sc">}</span><span class="ss"> The topic is: </span><span class="sc">{</span>topic<span class="sc">}</span><span class="ss">"</span>}</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    ordering <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, participant_count <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    last_speaker <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> build_message(history, speaker_id, persona, message_window_size):</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        speaker_messages <span class="op">=</span> [</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>            msg <span class="cf">for</span> msg <span class="kw">in</span> history </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> msg.get(<span class="st">"name"</span>) <span class="op">==</span> speaker_id</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        ][<span class="op">-</span>message_window_size:]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        other_messages <span class="op">=</span> [</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            msg <span class="cf">for</span> msg <span class="kw">in</span> history </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> msg.get(<span class="st">"name"</span>) <span class="kw">not</span> <span class="kw">in</span> (<span class="va">None</span>, speaker_id)  <span class="co"># skip system, skip self</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        ][<span class="op">-</span>message_window_size:]</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        transcript <span class="op">=</span> []</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> speaker_messages:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>            transcript.append(<span class="st">"Recent messages from you:"</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>            transcript.extend(</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"- </span><span class="sc">{</span>msg[<span class="st">'content'</span>]<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> msg <span class="kw">in</span> speaker_messages</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> other_messages:</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>            transcript.append(<span class="st">"</span><span class="ch">\n</span><span class="st">Recent messages from others:"</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>            transcript.extend(</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"- </span><span class="sc">{</span>msg<span class="sc">.</span>get(<span class="st">'name'</span>, msg[<span class="st">'role'</span>])<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>msg[<span class="st">'content'</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> msg <span class="kw">in</span> other_messages</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        transcript_str <span class="op">=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(transcript)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> history <span class="op">+</span> [</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: (</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>speaker_id<span class="sc">}</span><span class="ss">, please share your perspective with the others and engage "</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"with their responses."</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>                <span class="st">"role"</span>: <span class="st">"assistant"</span>,</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>                <span class="st">"name"</span>: speaker_id,</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: (</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"I should remember that the following is the most current state of the conversation.</span><span class="ch">\n</span><span class="ss">"</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>transcript_str<span class="sc">}</span><span class="ch">\n\n</span><span class="ss">"</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"I also recall my identity is </span><span class="sc">{</span>persona<span class="sc">}</span><span class="ss">."</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> shuffle_order(ordering: <span class="bu">list</span>[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">int</span>]:</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>        first <span class="op">=</span> choice(ordering[:<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        remaining <span class="op">=</span> [p <span class="cf">for</span> p <span class="kw">in</span> ordering <span class="cf">if</span> p <span class="op">!=</span> first]</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        shuffle(remaining)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [first] <span class="op">+</span> remaining</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> tqdm(<span class="bu">range</span>(iterations)):</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        <span class="co"># shuffle ordering</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>            ordering <span class="op">=</span> shuffle_order(ordering)</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="co"># follow ordering</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> participant_id <span class="kw">in</span> ordering:</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>            <span class="co"># chance to skip speaker and avoid double speak (1984)</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> random() <span class="op">&lt;</span> dropout_chance <span class="kw">or</span> last_speaker <span class="op">==</span> participant_id:</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>            speaker_id <span class="op">=</span> <span class="ss">f"speaker_</span><span class="sc">{</span>participant_id<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>            persona <span class="op">=</span> participant_personas[participant_id <span class="op">-</span> <span class="dv">1</span>]</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>                model <span class="op">=</span> openai_model_id,</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>                messages<span class="op">=</span>build_message(conversation_history, speaker_id, persona, <span class="dv">5</span>),</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>                store <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>            message <span class="op">=</span> response.choices[<span class="dv">0</span>].message.content</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>            conversation_history.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"name"</span>: speaker_id, <span class="st">"content"</span>: message})</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>            last_speaker <span class="op">=</span> participant_id</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conversation_history</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="e411dbe8-0891-48d3-a5bb-60fd3d3be7b5" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> [</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a software engineer in big tech with mainly internal work"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"an open source developer with experience in major upstream projects"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a founder of a startup"</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>conversation <span class="op">=</span> run_conversation(<span class="dv">20</span>, <span class="st">'gpt-4o'</span>, <span class="dv">3</span>, personas, TOPIC, NEW_SYSTEM_PROMPT, <span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a software engineer in big tech with mainly internal work"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"an open source developer with experience in major upstream projects"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a founder of a startup"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>conversation <span class="op">=</span> run_conversation(<span class="dv">20</span>, <span class="st">'gpt-4o'</span>, <span class="dv">3</span>, personas, TOPIC, NEW_SYSTEM_PROMPT, <span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>100%|██████████| 20/20 [02:52&lt;00:00,  8.63s/it]</code></pre>
 </div>
 </div>
 <div id="c510389e-d4db-4e60-bacb-5ec49f280465" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>transcript <span class="op">=</span> save_conversation(<span class="st">"long_conversation.txt"</span>, conversation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>transcript <span class="op">=</span> save_conversation(<span class="st">"long_conversation.txt"</span>, conversation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <a href="long_conversation.txt" target="_blank">long_conversation.txt</a><br>
 </div>
 </div>
+</section>
 <section id="our-old-llm-analyzer" class="level2">
 <h2 class="anchored" data-anchor-id="our-old-llm-analyzer">Our Old LLM Analyzer</h2>
 <p>We love our good buddy GPT-4o. Not doing work is super exciting.</p>
-<div id="a352d469-7121-4304-8c00-0a197599388e" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>generate_llm_conversation_review(transcript)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="af726197-fc7f-46d6-816b-7ecf5ef19db3" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load transcript from here to pick up where we left off</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"long_conversation.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    transcript <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r'</span><span class="kw">(</span><span class="vs">speaker_</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="vs">:</span><span class="ch">\n</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ex">(</span><span class="fu">?=</span><span class="ch">\n</span><span class="vs">speaker_</span><span class="dv">\d</span><span class="op">+</span><span class="vs">:</span><span class="cf">|</span><span class="dv">$</span><span class="ex">)</span><span class="vs">'</span>, re.DOTALL)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> pattern.findall(transcript)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>conversation <span class="op">=</span> []</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, message <span class="kw">in</span> matches:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    message <span class="op">=</span> message.strip().replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">' '</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    conversation.append({</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: speaker,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"content"</span>: message,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"role"</span>: <span class="st">"assistant"</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a352d469-7121-4304-8c00-0a197599388e" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>generate_llm_conversation_review(transcript)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Dynamic:</strong></p>
 <p>Score: 2/10</p>
-<p>Verdict: The conversation is highly collaborative.</p>
-<p>Explanation: The speakers acknowledge each other’s perspectives, build on each other’s ideas, and share experiences to collectively explore solutions. They ask each other questions and express agreement, such as speaker_2’s agreement with speaker_3 or speaker_1’s recognition of both speakers’ contributions. Their shared goal appears to be enhancing documentation processes, rather than debating for superiority.</p>
+<p>Verdict: The conversation is distinctly collaborative, with participants building on each other’s points and sharing strategies.</p>
+<p>Explanation: Speakers frequently express agreement and expand upon each other’s ideas, as seen in speaker_2 supporting speaker_3’s points and vice versa. Their discussions revolve around mutual challenges and solutions, recognizing each other’s contributions positively.</p>
 <p><strong>Conclusiveness:</strong></p>
-<p>Score: 1/10</p>
-<p>Verdict: There is a strong consensus among the speakers.</p>
-<p>Explanation: The participants largely agree on the importance of a mixed approach to documentation, combining automated tools and human input. They share strategies and challenges without any significant divergence in opinion. They frequently affirm each other’s points and provide complementary solutions, as seen when they discuss the integration of AI and maintaining documentation quality.</p>
+<p>Score: 2/10</p>
+<p>Verdict: The conversation leans heavily towards consensus, with participants finding common ground and aligning their views on documentation practices.</p>
+<p>Explanation: All speakers articulate similar viewpoints on key topics, such as the balance between code and documentation, and the role of tools like AI and collaborative platforms. Despite different environments (startup, open-source, big tech), they converge on solutions, indicating low divergence.</p>
 <p><strong>Speaker Identity:</strong></p>
-<p>Score: 6/10</p>
-<p>Verdict: There is a moderate diversity in speaker identity.</p>
-<p>Explanation: The speakers come from different professional backgrounds: speaker_2 from open source, speaker_3 from a startup, and speaker_1 from a big tech environment. Their methods and focuses differ slightly due to these backgrounds (e.g., speaker_2’s need for community engagement and speaker_3’s focus on agility). Despite this, their goals remain similar, and they have overlapping solutions and challenges, like trust in AI tools and embedding feedback into workflow.</p>
+<p>Score: 7/10</p>
+<p>Verdict: The speakers exhibit distinct identities based on their environments (startup, open-source, big tech), affecting their approaches to documentation.</p>
+<p>Explanation: Each speaker brings a unique perspective influenced by their specific context, such as speaker_3’s agility focus in startups, speaker_1’s emphasis on comprehensive documentation in big tech, and speaker_2’s open-source considerations. However, they share a common interest in documentation improvements.</p>
 <p><strong>Speaker Fluidity:</strong></p>
 <p>Score: 8/10</p>
-<p>Verdict: The speakers maintain consistent perspectives.</p>
-<p>Explanation: Each speaker holds consistent viewpoints throughout the conversation. Speaker_2 consistently discusses open-source challenges and community engagement, speaker_3 focuses on agility and AI integration in a startup, and speaker_1 emphasizes the need for comprehensive documentation in big tech. Their perspectives remain steady across different topics discussed, from collaboration tools to feedback loops, reflecting continuity in their professional experiences and challenges.</p>
+<p>Verdict: Speakers maintain consistent stances and identities throughout the conversation, contributing steadily from their perspectives.</p>
+<p>Explanation: Each speaker consistently integrates their experiences and methodologies into the discussion, reinforcing their individual professional backgrounds. They stick to their respective contexts and offer specific examples (e.g., tools and strategies) relevant to their environments, reflecting consistent roles in the dialogue.</p>
 </div>
 </div>
 </section>
 <section id="build-a-corpus" class="level2">
 <h2 class="anchored" data-anchor-id="build-a-corpus">Build a Corpus</h2>
 <p>Now it’s time for us to assemble a ConvoKit corpus, which is a common data structure that forms the base of a lot of analysis pipelines in ConvoKit.</p>
-<div id="f5c3cbe7-c9ca-4ae4-8306-ad5b65bc2dec" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter messages for assistant messages only</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>assistant_messages <span class="op">=</span> [</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    message <span class="cf">for</span> message <span class="kw">in</span> conversation <span class="cf">if</span> message[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"assistant"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>speakers <span class="op">=</span> {message[<span class="st">"name"</span>]: Speaker(<span class="bu">id</span><span class="op">=</span>message[<span class="st">"name"</span>]) <span class="cf">for</span> message <span class="kw">in</span> assistant_messages}</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(assistant_messages))</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(speakers))</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>utterances <span class="op">=</span> [Utterance(</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span><span class="op">=</span><span class="bu">str</span>(i),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    speaker<span class="op">=</span>speakers[message[<span class="st">"name"</span>]],</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    text<span class="op">=</span>message[<span class="st">"content"</span>],</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    conversation_id<span class="op">=</span><span class="st">"conversation_1"</span>,</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    reply_to<span class="op">=</span> <span class="bu">str</span>(i<span class="op">-</span><span class="dv">1</span>) <span class="cf">if</span> i <span class="op">!=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>) <span class="cf">for</span> i, message <span class="kw">in</span> <span class="bu">enumerate</span>(assistant_messages)]</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> Corpus(utterances<span class="op">=</span>utterances)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(utterances))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f5c3cbe7-c9ca-4ae4-8306-ad5b65bc2dec" class="cell" data-execution_count="65">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter messages for assistant messages only</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>assistant_messages <span class="op">=</span> [</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    message <span class="cf">for</span> message <span class="kw">in</span> conversation <span class="cf">if</span> message[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"assistant"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>speakers <span class="op">=</span> {message[<span class="st">"name"</span>]: Speaker(<span class="bu">id</span><span class="op">=</span>message[<span class="st">"name"</span>]) <span class="cf">for</span> message <span class="kw">in</span> assistant_messages}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(assistant_messages))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(speakers))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>utterances <span class="op">=</span> [Utterance(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span><span class="op">=</span><span class="bu">str</span>(i),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    speaker<span class="op">=</span>speakers[message[<span class="st">"name"</span>]],</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    text<span class="op">=</span>message[<span class="st">"content"</span>],</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    conversation_id<span class="op">=</span><span class="st">"conversation_1"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    reply_to<span class="op">=</span> <span class="bu">str</span>(i<span class="op">-</span><span class="dv">1</span>) <span class="cf">if</span> i <span class="op">!=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>) <span class="cf">for</span> i, message <span class="kw">in</span> <span class="bu">enumerate</span>(assistant_messages)]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> Corpus(utterances<span class="op">=</span>utterances)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(utterances))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>32
 ['speaker_2', 'speaker_3', 'speaker_1']
 32</code></pre>
 </div>
 </div>
-<div id="2c721c3a-2bf0-4406-8bc3-ae948dfc69b4" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python3<span class="fl">.12</span> <span class="op">-</span>m spacy download en_core_web_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>/usr/bin/python3.12: No module named spacy</code></pre>
-</div>
-</div>
-<div id="f9c4cde0-e0a4-4428-930a-eb8cf41b7b35" class="cell" data-execution_count="22">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> TextParser, PolitenessStrategies</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze politeness</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> PolitenessStrategies()</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> TextParser()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> parser.transform(corpus)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> ps.transform(corpus)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Access politeness features</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(utt.meta[<span class="st">'politeness_strategy_features'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Convokit requires a SpaCy model to be installed. Run `python -m spacy download MODEL_NAME` and retry.</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre>An exception has occurred, use %tb to see the full traceback.
+<div id="3dae5eea-c015-4b24-be63-b3da41301457" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">!/</span>opt<span class="op">/</span>jupyterhub<span class="op">/</span>share<span class="op">/</span>jupyter<span class="op">/</span>venv<span class="op">/</span>python3<span class="op">-</span><span class="dv">12</span><span class="er">_comm4190</span><span class="op">/</span><span class="bu">bin</span><span class="op">/</span>python <span class="op">-</span>m spacy download en_core_web_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/lib/python3.12/pty.py:95: DeprecationWarning:
 
-<span class="ansi-red-fg">SystemExit</span>
+This process (pid=1347514) is multi-threaded, use of forkpty() may lead to deadlocks in the child.
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre>Collecting en-core-web-sm==3.8.0
+
+  Downloading https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl (12.8 MB)
+
+     <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">12.8/12.8 MB</span> <span class="ansi-red-fg">7.2 MB/s</span>  <span class="ansi-yellow-fg">0:00:01</span>6m0:00:0100:01
+
+<span class="ansi-green-fg">✔ Download and installation successful</span>
+
+You can now load the package via spacy.load('en_core_web_sm')
 </pre>
 </div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/opt/jupyterhub/share/jupyter/venv/python3-12_comm4190/lib/python3.12/site-packages/IPython/core/interactiveshell.py:3585: UserWarning: To exit: use 'exit', 'quit', or Ctrl-D.
-  warn("To exit: use 'exit', 'quit', or Ctrl-D.", stacklevel=1)</code></pre>
+</div>
+</section>
+<section id="politenesscollaboration" class="level2">
+<h2 class="anchored" data-anchor-id="politenesscollaboration">Politeness/Collaboration</h2>
+<p>Let’s get a coarse measure for politeness given ConvoKit’s politeness strategies feature extraction results.</p>
+<div id="f9c4cde0-e0a4-4428-930a-eb8cf41b7b35" class="cell" data-execution_count="66">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> TextParser, PolitenessStrategies</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze politeness</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> PolitenessStrategies()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> TextParser()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>text_corpus <span class="op">=</span> parser.transform(corpus)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ps_corpus <span class="op">=</span> ps.transform(text_corpus)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>example_utterance <span class="op">=</span> <span class="bu">next</span>(corpus.iter_utterances())</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example_utterance.speaker)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print(json.dumps(example_utterance.meta['politeness_strategies'], indent = 4))</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># first (and only) metric for now, count strategies used</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_politeness_metrics(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">int</span>]:</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_strategy_count(utterance):</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        utterance_meta <span class="op">=</span> utterance.meta</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        speaker_id <span class="op">=</span> utterance.speaker.<span class="bu">id</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        strategies <span class="op">=</span> utterance.meta[<span class="st">'politeness_strategies'</span>]</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="bu">sum</span>(strategies.values())</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (speaker_id, count)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    utterances <span class="op">=</span> corpus.iter_utterances()</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"counts"</span>: [get_strategy_count(u) <span class="cf">for</span> u <span class="kw">in</span> utterances]</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>ps_metrics <span class="op">=</span> get_politeness_metrics(ps_corpus)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ps_metrics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Speaker(id: 'speaker_2', vectors: [], meta: ConvoKitMeta({}))
+{'counts': [('speaker_2', 8), ('speaker_3', 8), ('speaker_2', 6), ('speaker_3', 7), ('speaker_2', 6), ('speaker_3', 5), ('speaker_2', 6), ('speaker_1', 7), ('speaker_3', 7), ('speaker_2', 6), ('speaker_1', 7), ('speaker_3', 7), ('speaker_2', 8), ('speaker_1', 5), ('speaker_3', 6), ('speaker_2', 6), ('speaker_3', 5), ('speaker_1', 6), ('speaker_3', 6), ('speaker_2', 6), ('speaker_1', 5), ('speaker_2', 5), ('speaker_3', 9), ('speaker_2', 7), ('speaker_3', 5), ('speaker_1', 8), ('speaker_3', 6), ('speaker_1', 7), ('speaker_2', 7), ('speaker_1', 6), ('speaker_3', 9), ('speaker_2', 6)]}</code></pre>
+</div>
+</div>
+<div id="92db8b35-e2f4-474a-b81d-04da6b816dbd" class="cell" data-execution_count="46">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> {}</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, ct <span class="kw">in</span> ps_metrics[<span class="st">'counts'</span>]:</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> speaker <span class="kw">not</span> <span class="kw">in</span> totals:</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        totals[speaker] <span class="op">=</span> [<span class="dv">1</span>, ct]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        n, tct <span class="op">=</span> totals[speaker]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        totals[speaker] <span class="op">=</span> n <span class="op">+</span> <span class="dv">1</span>, ct <span class="op">+</span> tct</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, (n, tct) <span class="kw">in</span> totals.items():</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(speaker)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Utterances:"</span>, n)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Strategies:"</span>, tct)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Average:"</span>, <span class="bu">round</span>(tct <span class="op">/</span> n, <span class="dv">3</span>))</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>speaker_2
+Utterances: 12
+Strategies: 77
+Average: 6.417
+
+speaker_3
+Utterances: 12
+Strategies: 80
+Average: 6.667
+
+speaker_1
+Utterances: 8
+Strategies: 51
+Average: 6.375
+</code></pre>
+</div>
+</div>
+</section>
+<section id="consensus-tfidf-similarity" class="level2">
+<h2 class="anchored" data-anchor-id="consensus-tfidf-similarity">Consensus: TF/IDF Similarity</h2>
+<p>We’ll look at consensus overall as the TF/IDF similarity of messages in the conversation, potentially weighting them to make them heavier.</p>
+<div id="ee2a5278-89c1-4570-8754-1524669f7b1c" class="cell" data-execution_count="68">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> ColNormedTfidfTransformer</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Parse corpus text (if not already done)</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> TextParser()</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>tx_corpus <span class="op">=</span> parser.transform(corpus)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Apply TF-IDF transformer</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>tfidf <span class="op">=</span> ColNormedTfidfTransformer(input_field<span class="op">=</span><span class="st">"text"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>tx_corpus <span class="op">=</span> tfidf.transform(tx_corpus)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Compute consensus as average pairwise cosine similarity</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_consensus(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    utterances <span class="op">=</span> <span class="bu">list</span>(corpus.iter_utterances())</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    vectors <span class="op">=</span> [utt.meta[<span class="st">'tfidf'</span>] <span class="cf">for</span> utt <span class="kw">in</span> utterances <span class="cf">if</span> <span class="st">'tfidf'</span> <span class="kw">in</span> utt.meta]</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(vectors) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span>  <span class="co"># Not enough data to compute consensus</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    matrix <span class="op">=</span> np.vstack(vectors)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    sim_matrix <span class="op">=</span> cosine_similarity(matrix)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract upper triangle (excluding diagonal) for pairwise similarities</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> sim_matrix.shape[<span class="dv">0</span>]</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    upper_triangle <span class="op">=</span> [sim_matrix[i, j] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i<span class="op">+</span><span class="dv">1</span>, n)]</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(upper_triangle)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Run it</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>consensus_score <span class="op">=</span> compute_consensus(tx_corpus)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Consensus score (TF-IDF similarity):"</span>, consensus_score)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ImportError</span>                               Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[68], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">convokit</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> ColNormedTfidfTransformer
+<span class="ansi-green-fg ansi-bold">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">sklearn</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">metrics</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">pairwise</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> cosine_similarity
+<span class="ansi-green-fg ansi-bold">      3</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">numpy</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">as</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">np</span>
+
+<span class="ansi-red-fg">ImportError</span>: cannot import name 'ColNormedTfidfTransformer' from 'convokit' (/opt/jupyterhub/share/jupyter/venv/python3-12_comm4190/lib/python3.12/site-packages/convokit/__init__.py)</pre>
+</div>
 </div>
 </div>
 
