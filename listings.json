@@ -2,6 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/015_the_model_mixture/index.html",
+      "/posts/014_spontaneous_interactions/index.html",
+      "/posts/013_goals_and_actions/index.html",
       "/posts/011_seeing_the_world/index.html",
       "/posts/010_agents_in_space/index.html",
       "/posts/009_token_impact_estimator/token_impact_estimator.html",
