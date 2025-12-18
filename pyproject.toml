@@ -1,10 +1,11 @@
 [project]
 name = "comm4190-f25-using-llms-blog"
 version = "0.1.0"
-description = "Add your description here"
+description = "Blog env"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
+    "convokit>=4.0.0",
     "ipykernel>=7.1.0",
     "jupyterlab>=4.5.1",
     "openai>=1.54.0",
