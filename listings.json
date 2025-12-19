@@ -2,7 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/019_memory_and_forgetting/index.html",
+      "/posts/017_evaluating_llm_reflection/index.html",
       "/posts/015_the_model_mixture/index.html",
+      "/posts/016_an_experiment/index.html",
       "/posts/014_spontaneous_interactions/index.html",
       "/posts/013_goals_and_actions/index.html",
       "/posts/011_seeing_the_world/index.html",
