@@ -9,6 +9,7 @@ dependencies = [
     "convokit>=4.0.0",
     "google-generativeai>=0.8.6",
     "ipykernel>=7.1.0",
+    "ipywidgets>=8.1.8",
     "jupyterlab>=4.5.1",
     "networkx>=3.6.1",
     "openai>=1.54.0",
