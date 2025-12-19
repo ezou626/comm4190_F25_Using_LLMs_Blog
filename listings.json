@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/020_persona_drift_over_time/persona_drift_over_time.html",
       "/posts/019_memory_and_forgetting/index.html",
       "/posts/017_evaluating_llm_reflection/index.html",
       "/posts/015_the_model_mixture/index.html",

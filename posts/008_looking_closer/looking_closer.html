@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -106,6 +106,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -198,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="46301a28-1c30-4ffe-82f2-2da986070a22" class="cell">
+<div id="46301a28-1c30-4ffe-82f2-2da986070a22" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as always, some boilerplate</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -281,20 +284,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>    display(FileLink(filename))</span>
 <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conversation_transcript</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre>  <span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[2]</span><span class="ansi-green-fg">, line 73</span>
-<span class="ansi-red-fg">    </span><span class="ansi-red-fg">messages.append(f"{record["name"]}:\n{record["content"]}")</span>
-                               ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> f-string: unmatched '['
-</pre>
-</div>
-</div>
 </div>
 <section id="generating-a-conversation" class="level2">
 <h2 class="anchored" data-anchor-id="generating-a-conversation">Generating a Conversation</h2>
 <p>Let’s build a sufficiently long conversation so we can create a way to analyze it.</p>
-<div id="534d4cca-7f07-4351-875c-6a5602e64e02" class="cell">
+<div id="534d4cca-7f07-4351-875c-6a5602e64e02" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>NEW_SYSTEM_PROMPT <span class="op">=</span> (</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"You a participant in a conversation between experienced software engineers. "</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Keep questions minimal and only use them when necessary. "</span></span>
@@ -395,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> conversation_history</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="e411dbe8-0891-48d3-a5bb-60fd3d3be7b5" class="cell">
+<div id="e411dbe8-0891-48d3-a5bb-60fd3d3be7b5" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"a software engineer in big tech with mainly internal work"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"an open source developer with experience in major upstream projects"</span>,</span>
@@ -403,27 +397,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>conversation <span class="op">=</span> run_conversation(<span class="dv">20</span>, <span class="st">'gpt-4o'</span>, <span class="dv">3</span>, personas, TOPIC, NEW_SYSTEM_PROMPT, <span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>100%|██████████| 20/20 [02:52&lt;00:00,  8.63s/it]</code></pre>
+<pre><code>100%|██████████| 20/20 [02:48&lt;00:00,  8.42s/it]</code></pre>
 </div>
 </div>
-<div id="c510389e-d4db-4e60-bacb-5ec49f280465" class="cell">
+<div id="c510389e-d4db-4e60-bacb-5ec49f280465" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>transcript <span class="op">=</span> save_conversation(<span class="st">"long_conversation.txt"</span>, conversation)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[1]</span><span class="ansi-green-fg">, line 1</span>
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> transcript = <span class="ansi-yellow-bg">save_conversation</span>(<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">long_conversation.txt</span><span class="ansi-yellow-fg">"</span>, conversation)
-
-<span class="ansi-red-fg">NameError</span>: name 'save_conversation' is not defined</pre>
-</div>
+<div class="cell-output cell-output-display">
+<a href="long_conversation.txt" target="_blank">long_conversation.txt</a><br>
 </div>
 </div>
 </section>
 <section id="our-old-llm-analyzer" class="level2">
 <h2 class="anchored" data-anchor-id="our-old-llm-analyzer">Our Old LLM Analyzer</h2>
 <p>We love our good buddy GPT-4o. Not doing work is super exciting.</p>
-<div id="af726197-fc7f-46d6-816b-7ecf5ef19db3" class="cell">
+<div id="af726197-fc7f-46d6-816b-7ecf5ef19db3" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load transcript from here to pick up where we left off</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"long_conversation.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
@@ -443,32 +430,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"role"</span>: <span class="st">"assistant"</span></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a352d469-7121-4304-8c00-0a197599388e" class="cell">
+<div id="a352d469-7121-4304-8c00-0a197599388e" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>generate_llm_conversation_review(transcript)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Dynamic:</strong></p>
-<p>Score: 2/10</p>
-<p>Verdict: The conversation is distinctly collaborative, with participants building on each other’s points and sharing strategies.</p>
-<p>Explanation: Speakers frequently express agreement and expand upon each other’s ideas, as seen in speaker_2 supporting speaker_3’s points and vice versa. Their discussions revolve around mutual challenges and solutions, recognizing each other’s contributions positively.</p>
+<p>Score: 1/10</p>
+<p>Verdict: The participants are highly collaborative, engaging in constructive dialogue that supports shared insights and common goals.</p>
+<p>Explanation: All speakers frequently agree and build upon each other’s points, showing a willingness to listen, learn, and improve collective understanding. Phrases like “engaging with the points made by” and “adding to what [speaker] already articulated” suggest active and positive engagement rather than competition.</p>
 <p><strong>Conclusiveness:</strong></p>
-<p>Score: 2/10</p>
-<p>Verdict: The conversation leans heavily towards consensus, with participants finding common ground and aligning their views on documentation practices.</p>
-<p>Explanation: All speakers articulate similar viewpoints on key topics, such as the balance between code and documentation, and the role of tools like AI and collaborative platforms. Despite different environments (startup, open-source, big tech), they converge on solutions, indicating low divergence.</p>
+<p>Score: 1/10</p>
+<p>Verdict: The conversation reaches a solid consensus, agreeing on the importance of simplicity, engagement, and strategic alignment.</p>
+<p>Explanation: The participants converge on the value of maintaining code as a primary source of truth and strategic feedback management. There is mutual acknowledgment of using tools like Jira, GitHub, and frameworks such as agile across various environments, concluding on shared strategies.</p>
 <p><strong>Speaker Identity:</strong></p>
-<p>Score: 7/10</p>
-<p>Verdict: The speakers exhibit distinct identities based on their environments (startup, open-source, big tech), affecting their approaches to documentation.</p>
-<p>Explanation: Each speaker brings a unique perspective influenced by their specific context, such as speaker_3’s agility focus in startups, speaker_1’s emphasis on comprehensive documentation in big tech, and speaker_2’s open-source considerations. However, they share a common interest in documentation improvements.</p>
+<p>Score: 10/10</p>
+<p>Verdict: The speakers reflect diverse roles and contexts, each bringing unique perspectives from startups, large organizations, and open-source communities.</p>
+<p>Explanation: Each speaker introduces context-specific strategies and challenges—speaker_1 discusses large organizations, speaker_2 provides insights from open-source projects, and speaker_3 offers a startup perspective, highlighting diversity in approaches.</p>
 <p><strong>Speaker Fluidity:</strong></p>
-<p>Score: 8/10</p>
-<p>Verdict: Speakers maintain consistent stances and identities throughout the conversation, contributing steadily from their perspectives.</p>
-<p>Explanation: Each speaker consistently integrates their experiences and methodologies into the discussion, reinforcing their individual professional backgrounds. They stick to their respective contexts and offer specific examples (e.g., tools and strategies) relevant to their environments, reflecting consistent roles in the dialogue.</p>
+<p>Score: 10/10</p>
+<p>Verdict: Each speaker maintains a consistent role and perspective throughout the conversation.</p>
+<p>Explanation: speaker_1 consistently represents a large organization perspective, speaker_2 always provides an open-source viewpoint, and speaker_3 stays within the startup focus. Their points of view remain stable and distinct throughout the dialogue, with no shifts or changes in their identified roles.</p>
 </div>
 </div>
 </section>
 <section id="build-a-corpus" class="level2">
 <h2 class="anchored" data-anchor-id="build-a-corpus">Build a Corpus</h2>
 <p>Now it’s time for us to assemble a ConvoKit corpus, which is a common data structure that forms the base of a lot of analysis pipelines in ConvoKit.</p>
-<div id="f5c3cbe7-c9ca-4ae4-8306-ad5b65bc2dec" class="cell">
+<div id="f5c3cbe7-c9ca-4ae4-8306-ad5b65bc2dec" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter messages for assistant messages only</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>assistant_messages <span class="op">=</span> [</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    message <span class="cf">for</span> message <span class="kw">in</span> conversation <span class="cf">if</span> message[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"assistant"</span></span>
@@ -491,103 +478,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(utterances))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>32
+<pre><code>34
 ['speaker_2', 'speaker_3', 'speaker_1']
-32</code></pre>
-</div>
-</div>
-<div id="3dae5eea-c015-4b24-be63-b3da41301457" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">!/</span>opt<span class="op">/</span>jupyterhub<span class="op">/</span>share<span class="op">/</span>jupyter<span class="op">/</span>venv<span class="op">/</span>python3<span class="op">-</span><span class="dv">12</span><span class="er">_comm4190</span><span class="op">/</span><span class="bu">bin</span><span class="op">/</span>python <span class="op">-</span>m spacy download en_core_web_sm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/usr/lib/python3.12/pty.py:95: DeprecationWarning:
-
-This process (pid=1347514) is multi-threaded, use of forkpty() may lead to deadlocks in the child.
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre>Collecting en-core-web-sm==3.8.0
-
-  Downloading https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl (12.8 MB)
-
-     <span class="ansi-bright-black-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">12.8/12.8 MB</span> <span class="ansi-red-fg">7.2 MB/s</span>  <span class="ansi-yellow-fg">0:00:01</span>6m0:00:0100:01
-
-<span class="ansi-green-fg">✔ Download and installation successful</span>
-
-You can now load the package via spacy.load('en_core_web_sm')
-</pre>
-</div>
+No configuration file found at /home/ezou626/.convokit/config.yml; writing with contents: 
+# Default Backend Parameters
+db_host: localhost:27017
+data_directory: ~/.convokit/saved-corpora
+model_directory: ~/.convokit/saved-models
+default_backend: mem
+34</code></pre>
 </div>
 </div>
 </section>
 <section id="politenesscollaboration" class="level2">
 <h2 class="anchored" data-anchor-id="politenesscollaboration">Politeness/Collaboration</h2>
 <p>Let’s get a coarse measure for politeness given ConvoKit’s politeness strategies feature extraction results.</p>
-<div id="f9c4cde0-e0a4-4428-930a-eb8cf41b7b35" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> TextParser, PolitenessStrategies</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze politeness</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> PolitenessStrategies()</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> TextParser()</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>text_corpus <span class="op">=</span> parser.transform(corpus)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ps_corpus <span class="op">=</span> ps.transform(text_corpus)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>example_utterance <span class="op">=</span> <span class="bu">next</span>(corpus.iter_utterances())</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example_utterance.speaker)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print(json.dumps(example_utterance.meta['politeness_strategies'], indent = 4))</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># first (and only) metric for now, count strategies used</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_politeness_metrics(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">int</span>]:</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_strategy_count(utterance):</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        utterance_meta <span class="op">=</span> utterance.meta</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        speaker_id <span class="op">=</span> utterance.speaker.<span class="bu">id</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        strategies <span class="op">=</span> utterance.meta[<span class="st">'politeness_strategies'</span>]</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="bu">sum</span>(strategies.values())</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (speaker_id, count)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    utterances <span class="op">=</span> corpus.iter_utterances()</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"counts"</span>: [get_strategy_count(u) <span class="cf">for</span> u <span class="kw">in</span> utterances]</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>ps_metrics <span class="op">=</span> get_politeness_metrics(ps_corpus)</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ps_metrics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f9c4cde0-e0a4-4428-930a-eb8cf41b7b35" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit <span class="im">import</span> TextParser, PolitenessStrategies</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze politeness</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> PolitenessStrategies()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>parser <span class="op">=</span> TextParser()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>text_corpus <span class="op">=</span> parser.transform(corpus)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ps_corpus <span class="op">=</span> ps.transform(text_corpus)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>example_utterance <span class="op">=</span> <span class="bu">next</span>(corpus.iter_utterances())</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(example_utterance.speaker)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print(json.dumps(example_utterance.meta['politeness_strategies'], indent = 4))</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># first (and only) metric for now, count strategies used</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_politeness_metrics(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">int</span>]:</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_strategy_count(utterance):</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        utterance_meta <span class="op">=</span> utterance.meta</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        speaker_id <span class="op">=</span> utterance.speaker.<span class="bu">id</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        strategies <span class="op">=</span> utterance.meta[<span class="st">'politeness_strategies'</span>]</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="bu">sum</span>(strategies.values())</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (speaker_id, count)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    utterances <span class="op">=</span> corpus.iter_utterances()</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"counts"</span>: [get_strategy_count(u) <span class="cf">for</span> u <span class="kw">in</span> utterances]</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>ps_metrics <span class="op">=</span> get_politeness_metrics(ps_corpus)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ps_metrics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Speaker(id: 'speaker_2', vectors: [], meta: ConvoKitMeta({}))
-{'counts': [('speaker_2', 8), ('speaker_3', 8), ('speaker_2', 6), ('speaker_3', 7), ('speaker_2', 6), ('speaker_3', 5), ('speaker_2', 6), ('speaker_1', 7), ('speaker_3', 7), ('speaker_2', 6), ('speaker_1', 7), ('speaker_3', 7), ('speaker_2', 8), ('speaker_1', 5), ('speaker_3', 6), ('speaker_2', 6), ('speaker_3', 5), ('speaker_1', 6), ('speaker_3', 6), ('speaker_2', 6), ('speaker_1', 5), ('speaker_2', 5), ('speaker_3', 9), ('speaker_2', 7), ('speaker_3', 5), ('speaker_1', 8), ('speaker_3', 6), ('speaker_1', 7), ('speaker_2', 7), ('speaker_1', 6), ('speaker_3', 9), ('speaker_2', 6)]}</code></pre>
+{'counts': [('speaker_2', 6), ('speaker_3', 6), ('speaker_1', 8), ('speaker_2', 6), ('speaker_1', 7), ('speaker_2', 7), ('speaker_3', 4), ('speaker_2', 6), ('speaker_1', 6), ('speaker_3', 3), ('speaker_1', 5), ('speaker_2', 7), ('speaker_1', 5), ('speaker_3', 5), ('speaker_2', 8), ('speaker_3', 6), ('speaker_1', 6), ('speaker_3', 4), ('speaker_2', 7), ('speaker_1', 6), ('speaker_2', 6), ('speaker_3', 10), ('speaker_2', 6), ('speaker_3', 7), ('speaker_1', 4), ('speaker_3', 5), ('speaker_1', 7), ('speaker_2', 7), ('speaker_1', 7), ('speaker_2', 7), ('speaker_3', 6), ('speaker_1', 9), ('speaker_3', 6), ('speaker_2', 7)]}</code></pre>
 </div>
 </div>
-<div id="92db8b35-e2f4-474a-b81d-04da6b816dbd" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> {}</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, ct <span class="kw">in</span> ps_metrics[<span class="st">'counts'</span>]:</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> speaker <span class="kw">not</span> <span class="kw">in</span> totals:</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        totals[speaker] <span class="op">=</span> [<span class="dv">1</span>, ct]</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        n, tct <span class="op">=</span> totals[speaker]</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        totals[speaker] <span class="op">=</span> n <span class="op">+</span> <span class="dv">1</span>, ct <span class="op">+</span> tct</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, (n, tct) <span class="kw">in</span> totals.items():</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(speaker)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Utterances:"</span>, n)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Strategies:"</span>, tct)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Average:"</span>, <span class="bu">round</span>(tct <span class="op">/</span> n, <span class="dv">3</span>))</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="92db8b35-e2f4-474a-b81d-04da6b816dbd" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> {}</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, ct <span class="kw">in</span> ps_metrics[<span class="st">'counts'</span>]:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> speaker <span class="kw">not</span> <span class="kw">in</span> totals:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        totals[speaker] <span class="op">=</span> [<span class="dv">1</span>, ct]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        n, tct <span class="op">=</span> totals[speaker]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        totals[speaker] <span class="op">=</span> n <span class="op">+</span> <span class="dv">1</span>, ct <span class="op">+</span> tct</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> speaker, (n, tct) <span class="kw">in</span> totals.items():</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(speaker)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Utterances:"</span>, n)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Strategies:"</span>, tct)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Average:"</span>, <span class="bu">round</span>(tct <span class="op">/</span> n, <span class="dv">3</span>))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>speaker_2
-Utterances: 12
-Strategies: 77
-Average: 6.417
-
-speaker_3
 Utterances: 12
 Strategies: 80
 Average: 6.667
 
+speaker_3
+Utterances: 11
+Strategies: 62
+Average: 5.636
+
 speaker_1
-Utterances: 8
-Strategies: 51
-Average: 6.375
+Utterances: 11
+Strategies: 70
+Average: 6.364
 </code></pre>
 </div>
 </div>
@@ -595,217 +565,216 @@ Average: 6.375
 <section id="comprehensive-evaluation-metrics" class="level2">
 <h2 class="anchored" data-anchor-id="comprehensive-evaluation-metrics">Comprehensive Evaluation Metrics</h2>
 <p>Now let’s implement the full set of 4 evaluation metrics that match our LLM evaluation prompt. These give us quantitative, reproducible scores for: - <strong>Dynamic</strong>: Collaborative (1) vs.&nbsp;Competitive (10) - <strong>Conclusiveness</strong>: Consensus (1) vs.&nbsp;Divergence (10) - <strong>Speaker Identity</strong>: Similarity (1) vs.&nbsp;Diversity (10) - <strong>Speaker Fluidity</strong>: Malleability (1) vs.&nbsp;Consistency (10)</p>
-<div id="ee2a5278-89c1-4570-8754-1524669f7b1c" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit.coordination <span class="im">import</span> Coordination</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add timestamps to utterances for temporal analysis</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, utt <span class="kw">in</span> <span class="bu">enumerate</span>(corpus.iter_utterances()):</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    utt.meta[<span class="st">"timestamp"</span>] <span class="op">=</span> idx</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_dynamic_score(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Dynamic: Collaborative (1) vs. Competitive (10)"""</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use the politeness corpus we already created</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        politeness_scores <span class="op">=</span> []</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> ps_corpus.iter_utterances():</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>            ps_score <span class="op">=</span> utt.meta.get(<span class="st">"politeness_strategies"</span>, {})</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>            positive_markers <span class="op">=</span> <span class="bu">sum</span>([</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                ps_score.get(<span class="st">"feature_politeness_==HASPOSITIVE=="</span>, <span class="dv">0</span>),</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                ps_score.get(<span class="st">"feature_politeness_==HASNEGATIVE=="</span>, <span class="dv">0</span>) <span class="op">*</span> <span class="op">-</span><span class="dv">1</span>,</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>            ])</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>            politeness_scores.append(positive_markers)</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        avg_politeness <span class="op">=</span> np.mean(politeness_scores) <span class="cf">if</span> politeness_scores <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Normalize to 0-1 scale (rough approximation)</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        avg_politeness <span class="op">=</span> <span class="bu">min</span>(<span class="fl">1.0</span>, <span class="bu">max</span>(<span class="fl">0.0</span>, avg_politeness <span class="op">/</span> <span class="fl">10.0</span>))</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Turn-taking balance (entropy)</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        speaker_counts <span class="op">=</span> defaultdict(<span class="bu">int</span>)</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>            speaker_counts[utt.speaker.<span class="bu">id</span>] <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(speaker_counts) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        total <span class="op">=</span> <span class="bu">sum</span>(speaker_counts.values())</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        probs <span class="op">=</span> [count <span class="op">/</span> total <span class="cf">for</span> count <span class="kw">in</span> speaker_counts.values()]</span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        entropy <span class="op">=</span> <span class="op">-</span><span class="bu">sum</span>(p <span class="op">*</span> np.log2(p) <span class="cf">for</span> p <span class="kw">in</span> probs <span class="cf">if</span> p <span class="op">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        max_entropy <span class="op">=</span> np.log2(<span class="bu">len</span>(speaker_counts))</span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>        balance_score <span class="op">=</span> entropy <span class="op">/</span> max_entropy <span class="cf">if</span> max_entropy <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>        combined <span class="op">=</span> (avg_politeness <span class="op">+</span> balance_score) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> (combined <span class="op">*</span> <span class="dv">9</span>)</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing dynamic score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_conclusiveness_score(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Conclusiveness: Consensus (1) vs. Divergence (10)"""</span></span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>        coord <span class="op">=</span> Coordination()</span>
-<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>        coord_corpus <span class="op">=</span> coord.transform(corpus)</span>
-<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>        agreement_markers <span class="op">=</span> [<span class="st">"agree"</span>, <span class="st">"yes"</span>, <span class="st">"exactly"</span>, <span class="st">"right"</span>, <span class="st">"true"</span>, <span class="st">"correct"</span>, <span class="st">"indeed"</span>]</span>
-<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>        disagreement_markers <span class="op">=</span> [<span class="st">"disagree"</span>, <span class="st">"no"</span>, <span class="st">"but"</span>, <span class="st">"however"</span>, <span class="st">"although"</span>, <span class="st">"wrong"</span>, <span class="st">"incorrect"</span>]</span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>        agreement_count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>        disagreement_count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> coord_corpus.iter_utterances():</span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>            text_lower <span class="op">=</span> utt.text.lower()</span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> marker <span class="kw">in</span> agreement_markers:</span>
-<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> marker <span class="kw">in</span> text_lower:</span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>                    agreement_count <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> marker <span class="kw">in</span> disagreement_markers:</span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> marker <span class="kw">in</span> text_lower:</span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>                    disagreement_count <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>        agreement_ratio <span class="op">=</span> agreement_count <span class="op">/</span> <span class="bu">max</span>(disagreement_count, <span class="dv">1</span>)</span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> agreement_ratio <span class="op">&gt;</span> <span class="dv">2</span>:</span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (agreement_ratio <span class="op">-</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">10</span></span>
-<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> agreement_ratio <span class="op">&lt;</span> <span class="fl">0.5</span>:</span>
-<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> (<span class="fl">0.5</span> <span class="op">-</span> agreement_ratio) <span class="op">*</span> <span class="dv">10</span></span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> <span class="fl">5.0</span></span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing conclusiveness score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_speaker_identity_score(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Speaker Identity: Similarity (1) vs. Diversity (10)"""</span></span>
-<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>        speakers <span class="op">=</span> {}</span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
-<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>            speaker_id <span class="op">=</span> utt.speaker.<span class="bu">id</span></span>
-<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> speaker_id <span class="kw">not</span> <span class="kw">in</span> speakers:</span>
-<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>                speakers[speaker_id] <span class="op">=</span> {<span class="st">"words"</span>: <span class="bu">set</span>()}</span>
-<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>            words <span class="op">=</span> <span class="bu">set</span>(re.findall(<span class="vs">r'</span><span class="dv">\b\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">'</span>, utt.text.lower()))</span>
-<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>            speakers[speaker_id][<span class="st">"words"</span>].update(words)</span>
-<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(speakers) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
-<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>        speaker_list <span class="op">=</span> <span class="bu">list</span>(speakers.keys())</span>
-<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>        overlaps <span class="op">=</span> []</span>
-<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(speaker_list)):</span>
-<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(speaker_list)):</span>
-<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a>                words_i <span class="op">=</span> speakers[speaker_list[i]][<span class="st">"words"</span>]</span>
-<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a>                words_j <span class="op">=</span> speakers[speaker_list[j]][<span class="st">"words"</span>]</span>
-<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">len</span>(words_i) <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> <span class="bu">len</span>(words_j) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">continue</span></span>
-<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>                overlap <span class="op">=</span> <span class="bu">len</span>(words_i <span class="op">&amp;</span> words_j) <span class="op">/</span> <span class="bu">len</span>(words_i <span class="op">|</span> words_j)</span>
-<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a>                overlaps.append(overlap)</span>
-<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> overlaps:</span>
-<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>        avg_overlap <span class="op">=</span> np.mean(overlaps)</span>
-<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> (avg_overlap <span class="op">*</span> <span class="dv">9</span>)</span>
-<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
-<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing speaker identity score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_speaker_fluidity_score(corpus: Corpus, window_size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">10</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Speaker Fluidity: Malleability (1) vs. Consistency (10)"""</span></span>
-<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>        speaker_utterances <span class="op">=</span> defaultdict(<span class="bu">list</span>)</span>
-<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
-<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>            speaker_utterances[utt.speaker.<span class="bu">id</span>].append({</span>
-<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>                <span class="st">"text"</span>: utt.text,</span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>                <span class="st">"timestamp"</span>: utt.meta.get(<span class="st">"timestamp"</span>, <span class="dv">0</span>)</span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>            })</span>
-<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(speaker_utterances) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a>        consistency_scores <span class="op">=</span> []</span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> speaker_id, utts <span class="kw">in</span> speaker_utterances.items():</span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(utts) <span class="op">&lt;</span> window_size:</span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>            utts_sorted <span class="op">=</span> <span class="bu">sorted</span>(utts, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">"timestamp"</span>])</span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>            mid_point <span class="op">=</span> <span class="bu">len</span>(utts_sorted) <span class="op">//</span> <span class="dv">2</span></span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a>            first_half_words <span class="op">=</span> <span class="bu">set</span>()</span>
-<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a>            second_half_words <span class="op">=</span> <span class="bu">set</span>()</span>
-<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> utt <span class="kw">in</span> utts_sorted[:mid_point]:</span>
-<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a>                words <span class="op">=</span> <span class="bu">set</span>(re.findall(<span class="vs">r'</span><span class="dv">\b\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">'</span>, utt[<span class="st">"text"</span>].lower()))</span>
-<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a>                first_half_words.update(words)</span>
-<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> utt <span class="kw">in</span> utts_sorted[mid_point:]:</span>
-<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a>                words <span class="op">=</span> <span class="bu">set</span>(re.findall(<span class="vs">r'</span><span class="dv">\b\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">'</span>, utt[<span class="st">"text"</span>].lower()))</span>
-<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a>                second_half_words.update(words)</span>
-<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(first_half_words) <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> <span class="bu">len</span>(second_half_words) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a>            overlap <span class="op">=</span> <span class="bu">len</span>(first_half_words <span class="op">&amp;</span> second_half_words)</span>
-<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a>            union <span class="op">=</span> <span class="bu">len</span>(first_half_words <span class="op">|</span> second_half_words)</span>
-<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a>            similarity <span class="op">=</span> overlap <span class="op">/</span> union <span class="cf">if</span> union <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
-<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a>            consistency_scores.append(similarity)</span>
-<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> consistency_scores:</span>
-<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>        avg_consistency <span class="op">=</span> np.mean(consistency_scores)</span>
-<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (avg_consistency <span class="op">*</span> <span class="dv">9</span>)</span>
-<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
-<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing speaker fluidity score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_conversation_convokit(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">float</span>]:</span>
-<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute all 4 evaluation metrics using ConvoKit."""</span></span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dynamic"</span>: compute_dynamic_score(corpus),</span>
-<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>        <span class="st">"conclusiveness"</span>: compute_conclusiveness_score(corpus),</span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a>        <span class="st">"speaker_identity"</span>: compute_speaker_identity_score(corpus),</span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a>        <span class="st">"speaker_fluidity"</span>: compute_speaker_fluidity_score(corpus)</span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute all metrics</span></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> evaluate_conversation_convokit(corpus)</span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== ConvoKit Evaluation Scores ===</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dynamic (Collaborative ↔ Competitive): </span><span class="sc">{</span>scores[<span class="st">'dynamic'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Conclusiveness (Consensus ↔ Divergence): </span><span class="sc">{</span>scores[<span class="st">'conclusiveness'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Identity (Similarity ↔ Diversity): </span><span class="sc">{</span>scores[<span class="st">'speaker_identity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Fluidity (Malleability ↔ Consistency): </span><span class="sc">{</span>scores[<span class="st">'speaker_fluidity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Compare these to the LLM evaluation above to see how well the quantitative metrics align with qualitative assessment."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ImportError</span>                               Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[68], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">convokit</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> ColNormedTfidfTransformer
-<span class="ansi-green-fg ansi-bold">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">sklearn</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">metrics</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">pairwise</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> cosine_similarity
-<span class="ansi-green-fg ansi-bold">      3</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">numpy</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">as</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,0,255)">np</span>
+<div id="ee2a5278-89c1-4570-8754-1524669f7b1c" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> convokit.coordination <span class="im">import</span> Coordination</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add timestamps to utterances for temporal analysis</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, utt <span class="kw">in</span> <span class="bu">enumerate</span>(corpus.iter_utterances()):</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    utt.meta[<span class="st">"timestamp"</span>] <span class="op">=</span> idx</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_dynamic_score(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Dynamic: Collaborative (1) vs. Competitive (10)"""</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use the politeness corpus we already created</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        politeness_scores <span class="op">=</span> []</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> ps_corpus.iter_utterances():</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>            ps_score <span class="op">=</span> utt.meta.get(<span class="st">"politeness_strategies"</span>, {})</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>            positive_markers <span class="op">=</span> <span class="bu">sum</span>([</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>                ps_score.get(<span class="st">"feature_politeness_==HASPOSITIVE=="</span>, <span class="dv">0</span>),</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                ps_score.get(<span class="st">"feature_politeness_==HASNEGATIVE=="</span>, <span class="dv">0</span>) <span class="op">*</span> <span class="op">-</span><span class="dv">1</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>            ])</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>            politeness_scores.append(positive_markers)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        avg_politeness <span class="op">=</span> np.mean(politeness_scores) <span class="cf">if</span> politeness_scores <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Normalize to 0-1 scale (rough approximation)</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>        avg_politeness <span class="op">=</span> <span class="bu">min</span>(<span class="fl">1.0</span>, <span class="bu">max</span>(<span class="fl">0.0</span>, avg_politeness <span class="op">/</span> <span class="fl">10.0</span>))</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Turn-taking balance (entropy)</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        speaker_counts <span class="op">=</span> defaultdict(<span class="bu">int</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>            speaker_counts[utt.speaker.<span class="bu">id</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(speaker_counts) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>        total <span class="op">=</span> <span class="bu">sum</span>(speaker_counts.values())</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>        probs <span class="op">=</span> [count <span class="op">/</span> total <span class="cf">for</span> count <span class="kw">in</span> speaker_counts.values()]</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>        entropy <span class="op">=</span> <span class="op">-</span><span class="bu">sum</span>(p <span class="op">*</span> np.log2(p) <span class="cf">for</span> p <span class="kw">in</span> probs <span class="cf">if</span> p <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>        max_entropy <span class="op">=</span> np.log2(<span class="bu">len</span>(speaker_counts))</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>        balance_score <span class="op">=</span> entropy <span class="op">/</span> max_entropy <span class="cf">if</span> max_entropy <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>        combined <span class="op">=</span> (avg_politeness <span class="op">+</span> balance_score) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> (combined <span class="op">*</span> <span class="dv">9</span>)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing dynamic score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_conclusiveness_score(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Conclusiveness: Consensus (1) vs. Divergence (10)"""</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>        coord <span class="op">=</span> Coordination()</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>        coord_corpus <span class="op">=</span> coord.transform(corpus)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>        agreement_markers <span class="op">=</span> [<span class="st">"agree"</span>, <span class="st">"yes"</span>, <span class="st">"exactly"</span>, <span class="st">"right"</span>, <span class="st">"true"</span>, <span class="st">"correct"</span>, <span class="st">"indeed"</span>]</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>        disagreement_markers <span class="op">=</span> [<span class="st">"disagree"</span>, <span class="st">"no"</span>, <span class="st">"but"</span>, <span class="st">"however"</span>, <span class="st">"although"</span>, <span class="st">"wrong"</span>, <span class="st">"incorrect"</span>]</span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>        agreement_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>        disagreement_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> coord_corpus.iter_utterances():</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>            text_lower <span class="op">=</span> utt.text.lower()</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> marker <span class="kw">in</span> agreement_markers:</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> marker <span class="kw">in</span> text_lower:</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>                    agreement_count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> marker <span class="kw">in</span> disagreement_markers:</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> marker <span class="kw">in</span> text_lower:</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>                    disagreement_count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>        agreement_ratio <span class="op">=</span> agreement_count <span class="op">/</span> <span class="bu">max</span>(disagreement_count, <span class="dv">1</span>)</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> agreement_ratio <span class="op">&gt;</span> <span class="dv">2</span>:</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (agreement_ratio <span class="op">-</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">10</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> agreement_ratio <span class="op">&lt;</span> <span class="fl">0.5</span>:</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> (<span class="fl">0.5</span> <span class="op">-</span> agreement_ratio) <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>            score <span class="op">=</span> <span class="fl">5.0</span></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing conclusiveness score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_speaker_identity_score(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Speaker Identity: Similarity (1) vs. Diversity (10)"""</span></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>        speakers <span class="op">=</span> {}</span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>            speaker_id <span class="op">=</span> utt.speaker.<span class="bu">id</span></span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> speaker_id <span class="kw">not</span> <span class="kw">in</span> speakers:</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>                speakers[speaker_id] <span class="op">=</span> {<span class="st">"words"</span>: <span class="bu">set</span>()}</span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>            words <span class="op">=</span> <span class="bu">set</span>(re.findall(<span class="vs">r'</span><span class="dv">\b\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">'</span>, utt.text.lower()))</span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>            speakers[speaker_id][<span class="st">"words"</span>].update(words)</span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(speakers) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>        speaker_list <span class="op">=</span> <span class="bu">list</span>(speakers.keys())</span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>        overlaps <span class="op">=</span> []</span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(speaker_list)):</span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(speaker_list)):</span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>                words_i <span class="op">=</span> speakers[speaker_list[i]][<span class="st">"words"</span>]</span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>                words_j <span class="op">=</span> speakers[speaker_list[j]][<span class="st">"words"</span>]</span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">len</span>(words_i) <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> <span class="bu">len</span>(words_j) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">continue</span></span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>                overlap <span class="op">=</span> <span class="bu">len</span>(words_i <span class="op">&amp;</span> words_j) <span class="op">/</span> <span class="bu">len</span>(words_i <span class="op">|</span> words_j)</span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>                overlaps.append(overlap)</span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> overlaps:</span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>        avg_overlap <span class="op">=</span> np.mean(overlaps)</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="dv">10</span> <span class="op">-</span> (avg_overlap <span class="op">*</span> <span class="dv">9</span>)</span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing speaker identity score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_speaker_fluidity_score(corpus: Corpus, window_size: <span class="bu">int</span> <span class="op">=</span> <span class="dv">10</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Speaker Fluidity: Malleability (1) vs. Consistency (10)"""</span></span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>        speaker_utterances <span class="op">=</span> defaultdict(<span class="bu">list</span>)</span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> utt <span class="kw">in</span> corpus.iter_utterances():</span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>            speaker_utterances[utt.speaker.<span class="bu">id</span>].append({</span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>                <span class="st">"text"</span>: utt.text,</span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>                <span class="st">"timestamp"</span>: utt.meta.get(<span class="st">"timestamp"</span>, <span class="dv">0</span>)</span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(speaker_utterances) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>        consistency_scores <span class="op">=</span> []</span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> speaker_id, utts <span class="kw">in</span> speaker_utterances.items():</span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(utts) <span class="op">&lt;</span> window_size:</span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a>            utts_sorted <span class="op">=</span> <span class="bu">sorted</span>(utts, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="st">"timestamp"</span>])</span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>            mid_point <span class="op">=</span> <span class="bu">len</span>(utts_sorted) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>            first_half_words <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>            second_half_words <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> utt <span class="kw">in</span> utts_sorted[:mid_point]:</span>
+<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a>                words <span class="op">=</span> <span class="bu">set</span>(re.findall(<span class="vs">r'</span><span class="dv">\b\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">'</span>, utt[<span class="st">"text"</span>].lower()))</span>
+<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>                first_half_words.update(words)</span>
+<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> utt <span class="kw">in</span> utts_sorted[mid_point:]:</span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a>                words <span class="op">=</span> <span class="bu">set</span>(re.findall(<span class="vs">r'</span><span class="dv">\b\w</span><span class="op">+</span><span class="dv">\b</span><span class="vs">'</span>, utt[<span class="st">"text"</span>].lower()))</span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>                second_half_words.update(words)</span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(first_half_words) <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> <span class="bu">len</span>(second_half_words) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a>            overlap <span class="op">=</span> <span class="bu">len</span>(first_half_words <span class="op">&amp;</span> second_half_words)</span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a>            union <span class="op">=</span> <span class="bu">len</span>(first_half_words <span class="op">|</span> second_half_words)</span>
+<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a>            similarity <span class="op">=</span> overlap <span class="op">/</span> union <span class="cf">if</span> union <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>            consistency_scores.append(similarity)</span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> consistency_scores:</span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>        avg_consistency <span class="op">=</span> np.mean(consistency_scores)</span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>        score <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (avg_consistency <span class="op">*</span> <span class="dv">9</span>)</span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">max</span>(<span class="dv">1</span>, <span class="bu">min</span>(<span class="dv">10</span>, score))</span>
+<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Error computing speaker fluidity score: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">5.0</span></span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_conversation_convokit(corpus: Corpus) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">float</span>]:</span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute all 4 evaluation metrics using ConvoKit."""</span></span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dynamic"</span>: compute_dynamic_score(corpus),</span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a>        <span class="st">"conclusiveness"</span>: compute_conclusiveness_score(corpus),</span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>        <span class="st">"speaker_identity"</span>: compute_speaker_identity_score(corpus),</span>
+<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>        <span class="st">"speaker_fluidity"</span>: compute_speaker_fluidity_score(corpus)</span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute all metrics</span></span>
+<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> evaluate_conversation_convokit(corpus)</span>
+<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== ConvoKit Evaluation Scores ===</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dynamic (Collaborative ↔ Competitive): </span><span class="sc">{</span>scores[<span class="st">'dynamic'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Conclusiveness (Consensus ↔ Divergence): </span><span class="sc">{</span>scores[<span class="st">'conclusiveness'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Identity (Similarity ↔ Diversity): </span><span class="sc">{</span>scores[<span class="st">'speaker_identity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Fluidity (Malleability ↔ Consistency): </span><span class="sc">{</span>scores[<span class="st">'speaker_fluidity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Compare these to the LLM evaluation above to see how well the quantitative metrics align with qualitative assessment."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error computing conclusiveness score: Coordination: must fit and transform on same corpus
+=== ConvoKit Evaluation Scores ===
 
-<span class="ansi-red-fg">ImportError</span>: cannot import name 'ColNormedTfidfTransformer' from 'convokit' (/opt/jupyterhub/share/jupyter/venv/python3-12_comm4190/lib/python3.12/site-packages/convokit/__init__.py)</pre>
-</div>
+Dynamic (Collaborative ↔ Competitive): 5.30/10
+Conclusiveness (Consensus ↔ Divergence): 5.00/10
+Speaker Identity (Similarity ↔ Diversity): 5.99/10
+Speaker Fluidity (Malleability ↔ Consistency): 3.87/10
+
+Compare these to the LLM evaluation above to see how well the quantitative metrics align with qualitative assessment.</code></pre>
 </div>
 </div>
 </section>
 <section id="zooming-out" class="level2">
 <h2 class="anchored" data-anchor-id="zooming-out">Zooming Out</h2>
 <p>This is probably the closest I’ve come so far to having something that looks like an “analysis pipeline” instead of just vibes: generate a conversation, turn it into a corpus, run a few feature extractors, and spit out numbers. The four metrics above (Dynamic, Conclusiveness, Speaker Identity, Speaker Fluidity) give us quantitative, repeatable scores that match the dimensions we’ve been using in LLM-based evaluation.</p>
-<p>Comparing the ConvoKit scores to the LLM evaluation shows how well automated metrics can capture conversational dynamics. The politeness analysis and vocabulary overlap measures provide objective baselines, while the LLM evaluation adds qualitative nuance about <em>why</em> a conversation feels collaborative or diverse.</p>
+<p>Comparing the ConvoKit scores to the LLM evaluation shows the difficulty of using automated metrics can capture conversational dynamics. The politeness analysis and vocabulary overlap measures provide objective baselines that may be a bit harsh/unforgiving, while the LLM evaluation adds qualitative nuance about <em>why</em> a conversation feels collaborative or diverse. We note that the LLM metrics differ greatly from the automated ones.</p>
 <p>At the same time, these experiments make it very obvious how much judgment still sits outside the notebook. Deciding whether a consensus score is “good” or “bad” is still a human call, and a single number can’t tell you whether a conversation is insightful, boring, or off-the-rails. My plan for the rest of the series is to keep layering these tools—LLM-based summaries, token accounting, ConvoKit metrics—into a shared toolkit I can reuse instead of reinventing everything from scratch each time.</p>
 <blockquote class="blockquote">
 <p><strong>Future Work:</strong> - Apply the same pipeline to a handful of very different topics to see how stable these metrics are. - Compare human ratings of “good” conversations against the automatic scores here. - Use the token-impact estimator from Blog 9 to relate conversational quality back to actual resource usage. - Refine the metrics based on how well they correlate with LLM and human evaluations.</p>
