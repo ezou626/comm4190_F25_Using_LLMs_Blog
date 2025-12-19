@@ -2,7 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/020_persona_drift_over_time/persona_drift_over_time.html",
       "/posts/025_scaling_number_of_speakers/index.html",
       "/posts/026_persona_drift_over_time_p3/index.html",
       "/posts/021_human_in_the_loop_moderation/index.html",
@@ -11,6 +10,7 @@
       "/posts/028_conflicts/index.html",
       "/posts/022_conversation_failure_modes/index.html",
       "/posts/023_persona_drift_over_time_p2/index.html",
+      "/posts/020_persona_drift_over_time/persona_drift_over_time.html",
       "/posts/019_memory_and_forgetting/index.html",
       "/posts/017_evaluating_llm_reflection/index.html",
       "/posts/015_the_model_mixture/index.html",
