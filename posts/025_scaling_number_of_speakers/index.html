@@ -351,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="improved-conclusiveness-calculation" class="level2">
 <h2 class="anchored" data-anchor-id="improved-conclusiveness-calculation">Improved Conclusiveness Calculation</h2>
-<p>The issue is that simple keyword matching often finds 0 agreement and 0 disagreement markers, leading to 0/0 -&gt; 5.0. We’ll improve this by: 1. Expanding marker detection with strong/moderate patterns 2. Direct utterance processing (avoiding Coordination transformer to prevent StopIteration errors) 3. Adding debugging to see what’s happening 4. Using weighted counts (strong markers count more than moderate ones)</p>
+<p>The issue is that simple keyword matching often finds 0 agreement and 0 disagreement markers, leading to 0/0 -&gt; 5.0. We’ll improve this by: 1. Using Coordination features more effectively 2. Expanding marker detection 3. Adding debugging to see what’s happening</p>
 <div id="8023c785" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> conversation_to_corpus(conversation_history: List[Dict]) <span class="op">-&gt;</span> Corpus:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Convert conversation history to a ConvoKit Corpus."""</span></span>
