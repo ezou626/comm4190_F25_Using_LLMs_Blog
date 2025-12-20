@@ -797,7 +797,7 @@ Speaker Identity (Similarity ↔ Diversity): 5.25/10
 Speaker Fluidity (Malleability ↔ Consistency): 4.65/10</code></pre>
 </div>
 </div>
-<div id="4d1974b0" class="cell" data-execution_count="32">
+<div id="4d1974b0" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>metrics_2speaker <span class="op">=</span> evaluate_conversation(conv_2speaker)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== 2-Speaker Results ==="</span>)</span>
@@ -812,6 +812,8 @@ Speaker Fluidity (Malleability ↔ Consistency): 4.65/10</code></pre>
 [DEBUG] Counts - Strong agree: 13, Moderate agree: 14
 [DEBUG] Counts - Strong disagree: 2, Moderate disagree: 36
 [DEBUG] Total agreement: 40, Total disagreement: 40
+[DEBUG] Agreement ratio: 1.000
+[DEBUG] Computed score: 5.000
 \n=== 2-Speaker Results ===
 Dynamic (Collaborative ↔ Competitive): 5.32/10
 Conclusiveness (Consensus ↔ Divergence): 5.00/10
@@ -819,39 +821,10 @@ Speaker Identity (Similarity ↔ Diversity): 5.25/10
 Speaker Fluidity (Malleability ↔ Consistency): 4.65/10</code></pre>
 </div>
 </div>
-<div id="b07cd4b1" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metrics_2speaker <span class="op">=</span> evaluate_conversation(conv_2speaker)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== 2-Speaker Results ==="</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dynamic (Collaborative ↔ Competitive): </span><span class="sc">{</span>metrics_2speaker[<span class="st">'dynamic'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Conclusiveness (Consensus ↔ Divergence): </span><span class="sc">{</span>metrics_2speaker[<span class="st">'conclusiveness'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Identity (Similarity ↔ Diversity): </span><span class="sc">{</span>metrics_2speaker[<span class="st">'speaker_identity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Fluidity (Malleability ↔ Consistency): </span><span class="sc">{</span>metrics_2speaker[<span class="st">'speaker_fluidity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[DEBUG] compute_conclusiveness_score called
-[DEBUG] Corpus type: &lt;class 'convokit.model.corpus.Corpus'&gt;
-[DEBUG] Retrieved 46 utterances
-[DEBUG] Counts - Strong agree: 13, Moderate agree: 14
-[DEBUG] Counts - Strong disagree: 2, Moderate disagree: 36
-[DEBUG] Total agreement: 40, Total disagreement: 40
-\n=== 2-Speaker Results ===
-Dynamic (Collaborative ↔ Competitive): 5.32/10
-Conclusiveness (Consensus ↔ Divergence): 5.00/10
-Speaker Identity (Similarity ↔ Diversity): 5.25/10
-Speaker Fluidity (Malleability ↔ Consistency): 4.65/10</code></pre>
-</div>
-</div>
-<div id="1051aae4" class="cell" data-execution_count="26">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run 3-speaker conversation</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">nRunning 3-speaker conversation with implicit personas..."</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>conv_3speaker <span class="op">=</span> run_conversation_implicit_personas(iterations<span class="op">=</span><span class="dv">33</span>, participant_count<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>metrics_3speaker <span class="op">=</span> evaluate_conversation(conv_3speaker)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== 3-Speaker Results ==="</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dynamic (Collaborative ↔ Competitive): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'dynamic'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Conclusiveness (Consensus ↔ Divergence): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'conclusiveness'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Identity (Similarity ↔ Diversity): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'speaker_identity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Fluidity (Malleability ↔ Consistency): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'speaker_fluidity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1051aae4" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run 3-speaker conversation</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">nRunning 3-speaker conversation with implicit personas..."</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>conv_3speaker <span class="op">=</span> run_conversation_implicit_personas(iterations<span class="op">=</span><span class="dv">33</span>, participant_count<span class="op">=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>\nRunning 3-speaker conversation with implicit personas...</code></pre>
 </div>
@@ -866,11 +839,35 @@ Speaker Identity (Similarity ↔ Diversity): 5.26/10
 Speaker Fluidity (Malleability ↔ Consistency): 4.82/10</code></pre>
 </div>
 </div>
+<div id="351e8de8" class="cell" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metrics_3speaker <span class="op">=</span> evaluate_conversation(conv_3speaker)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== 3-Speaker Results ==="</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dynamic (Collaborative ↔ Competitive): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'dynamic'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Conclusiveness (Consensus ↔ Divergence): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'conclusiveness'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Identity (Similarity ↔ Diversity): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'speaker_identity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Speaker Fluidity (Malleability ↔ Consistency): </span><span class="sc">{</span>metrics_3speaker[<span class="st">'speaker_fluidity'</span>]<span class="sc">:.2f}</span><span class="ss">/10"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[DEBUG] compute_conclusiveness_score called
+[DEBUG] Corpus type: &lt;class 'convokit.model.corpus.Corpus'&gt;
+[DEBUG] Retrieved 70 utterances
+[DEBUG] Counts - Strong agree: 18, Moderate agree: 14
+[DEBUG] Counts - Strong disagree: 3, Moderate disagree: 60
+[DEBUG] Total agreement: 50, Total disagreement: 66
+[DEBUG] Agreement ratio: 0.758
+[DEBUG] Computed score: 5.604
+\n=== 3-Speaker Results ===
+Dynamic (Collaborative ↔ Competitive): 5.43/10
+Conclusiveness (Consensus ↔ Divergence): 5.60/10
+Speaker Identity (Similarity ↔ Diversity): 5.26/10
+Speaker Fluidity (Malleability ↔ Consistency): 4.82/10</code></pre>
+</div>
+</div>
 </section>
 <section id="analyzing-implicit-personas" class="level2">
 <h2 class="anchored" data-anchor-id="analyzing-implicit-personas">Analyzing Implicit Personas</h2>
 <p>Let’s look at the actual messages to see what personas emerged.</p>
-<div id="82a25fc4" class="cell">
+<div id="82a25fc4" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first messages from each speaker (their initial personas)</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Initial Personas (First Messages) ==="</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> msg <span class="kw">in</span> conv_2speaker[:<span class="dv">2</span>]:</span>
@@ -888,15 +885,15 @@ Speaker Fluidity (Malleability ↔ Consistency): 4.82/10</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== Initial Personas (First Messages) ===
 \nspeaker_1:
-Thank you! I'm glad to be here. What topic are we diving into today?
+Thank you! I'm glad to be here. What's on everyone's mind today?
 \nspeaker_2:
-Thank you! I’m glad to be here. What are we discussing today?
+Thank you! I'm glad to be here. What's on the agenda for our discussion today?
 \n\n=== Later Messages (Persona Persistence) ===
-\nspeaker_1: Thank you, speaker_2, for sharing your insights and expanding on the transformative potential of educational technology. It's exciting to see how AI, ...
-\nspeaker_2: The conversation on educational technology has indeed been rich and multifaceted, highlighting the exciting potential technologies like AI, VR/AR, and...
-\nspeaker_1: Thank you all for sharing such insightful perspectives on the impact of technology in education. It's been inspiring to see the shared enthusiasm and ...
-\nspeaker_2: The conversation we've been engaging in is truly enlightening, illustrating a breadth of possibilities and thoughtful approaches to integrating techno...
-\nspeaker_1: I'm delighted to continue this discussion and reflect on the shared insights about the transformation of education through technology. Our conversatio...</code></pre>
+\nspeaker_2: Reflecting on the collective insights and dynamic discussions we've had, it's truly motivating to witness our commitment to integrating AI ethically a...
+\nspeaker_1: Speaker_2, I truly appreciate your perspectives and the enthusiasm you've brought to our discussion about the ethical integration of AI. It's been inc...
+\nspeaker_2: Reflecting on the depth and breadth of our ongoing discussion, I find it incredibly encouraging to see us, as a group, united by a shared commitment t...
+\nspeaker_1: Our discussion on integrating AI ethically across various sectors has generated quite a wealth of insights, each shedding light on the shared commitme...
+\nspeaker_2: It's been insightful to engage in this ongoing dialogue about integrating AI with a strong ethical foundation. Speaker_1 and many others have emphasiz...</code></pre>
 </div>
 </div>
 </section>
