@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="setup-and-imports" class="level2">
 <h2 class="anchored" data-anchor-id="setup-and-imports">Setup and Imports</h2>
-<div id="1eae8f79" class="cell">
+<div id="1eae8f79" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass, field</span>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="object-and-activity-definitions" class="level2">
 <h2 class="anchored" data-anchor-id="object-and-activity-definitions">Object and Activity Definitions</h2>
-<div id="6566fcef" class="cell">
+<div id="6566fcef" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ObjectType(Enum):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    TOOL <span class="op">=</span> <span class="st">"tool"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    LANDMARK <span class="op">=</span> <span class="st">"landmark"</span></span>
@@ -268,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="enhanced-agent-class" class="level2">
 <h2 class="anchored" data-anchor-id="enhanced-agent-class">Enhanced Agent Class</h2>
 <p>Agents need to be aware of objects in the world.</p>
-<div id="c3df5a43" class="cell">
+<div id="c3df5a43" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Agent:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    name: <span class="bu">str</span></span>
@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="world-with-objects" class="level2">
 <h2 class="anchored" data-anchor-id="world-with-objects">World with Objects</h2>
 <p>Let’s create a world populated with objects and run a simulation.</p>
-<div id="ef9a84fc" class="cell">
+<div id="ef9a84fc" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_world_objects(num_objects: <span class="bu">int</span> <span class="op">=</span> <span class="dv">5</span>) <span class="op">-&gt;</span> List[WorldObject]:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a set of objects scattered across the world."""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    objects <span class="op">=</span> []</span>
@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> agent <span class="kw">in</span> shuffled_agents:</span>
 <span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Find nearby objects</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            nearby_objects <span class="op">=</span> agent.find_nearby_objects(objects, radius<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            nearby_objects <span class="op">=</span> agent.find_nearby_objects(objects, radius<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Build context</span></span>
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            others <span class="op">=</span> [a <span class="cf">for</span> a <span class="kw">in</span> agents <span class="cf">if</span> a <span class="op">!=</span> agent]</span>
@@ -395,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>                <span class="cf">elif</span> direction <span class="op">==</span> <span class="st">"RIGHT"</span>: agent.move(<span class="dv">1</span>, <span class="dv">0</span>)</span>
 <span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Parse object interaction</span></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>            use_match <span class="op">=</span> re.search(<span class="vs">r'</span><span class="ch">\\</span><span class="pp">[USE:</span><span class="ch">\\</span><span class="pp">s*([^</span><span class="ch">\\</span><span class="pp">]</span><span class="vs">]</span><span class="op">+</span><span class="er">)</span><span class="ch">\\</span><span class="vs">]'</span>, content)</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>            use_match <span class="op">=</span> re.search(<span class="vs">r'</span><span class="ch">\[</span><span class="vs">USE:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="pp">[^</span><span class="ch">\]</span><span class="pp">]</span><span class="op">+</span><span class="kw">)</span><span class="ch">\]</span><span class="vs">'</span>, content)</span>
 <span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> use_match:</span>
 <span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>                obj_name <span class="op">=</span> use_match.group(<span class="dv">1</span>).strip()</span>
 <span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Find the object</span></span>
@@ -407,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extract message</span></span>
 <span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>            message <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\\</span><span class="pp">[MOVE:</span><span class="ch">\\</span><span class="pp">s*</span><span class="ch">\\</span><span class="pp">w+</span><span class="ch">\\</span><span class="pp">]</span><span class="vs">'</span>, <span class="st">''</span>, content)</span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>            message <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\\</span><span class="pp">[USE:[^</span><span class="ch">\\</span><span class="pp">]</span><span class="vs">]</span><span class="op">+</span><span class="ch">\\</span><span class="vs">]'</span>, <span class="st">''</span>, message)</span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>            message <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="ch">\[</span><span class="vs">USE:</span><span class="pp">[^</span><span class="ch">\]</span><span class="pp">]</span><span class="op">+</span><span class="ch">\]</span><span class="vs">'</span>, <span class="st">''</span>, message)</span>
 <span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>            message <span class="op">=</span> message.strip()</span>
 <span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> message:</span>
@@ -430,22 +430,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Run simulation</span></span>
 <span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== Running Simulation ==="</span>)</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>transcript <span class="op">=</span> run_world_with_objects(agents, world_objects, num_rounds<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>transcript <span class="op">=</span> run_world_with_objects(agents, world_objects, num_rounds<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>World objects created:
+  - statue (landmark) at (9, 2)
+  - statue (landmark) at (2, 13)
+  - ancient_tree (landmark) at (10, 5)
+  - book (item) at (11, 5)
+  - coin (item) at (9, 0)
+\n=== Running Simulation ===
+\n=== Round 1 ===
+Alice: [MOVE: UP] Hi everyone! I'm Alice located at (5, 5) on the grid. How's it going, Bob?
+Bob: [MOVE: LEFT] Hey Alice, nice to meet you! I'm at (15, 15) right now. How's the view from your spot?
+\n=== Round 2 ===
+Bob: [MOVE: UP] Hey Alice, things are pretty quiet over here at (15, 14) now. How's the weather on your side of the grid?
+Alice: [MOVE: RIGHT] Hey Bob, the atmosphere is pretty calm at (6, 5). By the way, ever thought about what it would be like if our avatars could explore beyond this grid into the digital universe?
+\n=== Round 3 ===
+Bob: [MOVE: RIGHT] That's an interesting thought, Alice. What if exploring beyond the grid meant we'd discover new worlds or dimensions in the digital realm?
+Alice: [MOVE: RIGHT] Speaking of new dimensions, Bob, have you heard about the latest developments in virtual reality? It's fascinating how it could blur the boundaries between our grid and the digital universe.
+\n=== Round 4 ===
+Alice: [MOVE: RIGHT] Hey Bob, I moved to (7, 5). It's exciting to think about virtual reality evolving to the point where we could traverse different digital landscapes, almost like stepping into alternate realities!
+Bob: [MOVE: RIGHT] That's true, Alice! With virtual reality advancing, it feels like we're drawing closer to a multiverse of connected grids where each digital landscape is a new adventure.
+\n=== Round 5 ===
+Bob: [MOVE: LEFT] It's thrilling to consider how we might soon encounter diverse and interconnected virtual worlds as easily as we navigate our grid. What do you think would be the coolest type of digital landscape to explore?
+Alice: [MOVE: UP] Exploring a digital landscape that mimics an underwater world with vibrant coral reefs and diverse marine life would be amazing. Imagine swimming through it as an avatar, discovering hidden treasures and sea creatures!
+\n=== Round 6 ===
+Alice: Alice: [MOVE: DOWN] I love the idea of exploring a landscape like that! It would be so calming and exciting at the same time. How about a virtual jungle with hidden ancient ruins and puzzles to solve?
+Bob: [MOVE: DOWN] A virtual jungle with ancient ruins and puzzles sounds exhilarating! Imagine the sense of adventure as we uncover secrets, overcome challenges, and witness the wonders of the past.
+\n=== Round 7 ===
+Bob: [MOVE: LEFT] Exploring a virtual Atlantis would also be fascinating, with sunken ships and mythological creatures. Imagining the history and legends come to life in an expansive world sounds thrilling!
+Alice: [MOVE: DOWN] Speaking of virtual environments, wouldn't it be amazing if we could integrate aspects of real-world ecosystems, like weather changes and wildlife behavior, to make the experience even more immersive?
+\n=== Round 8 ===
+Bob: [MOVE: RIGHT] I completely agree, Alice! Incorporating real-world elements like dynamic weather and evolving wildlife in virtual worlds could create truly immersive and ever-changing adventures.
+Alice: [MOVE: LEFT] It's incredible to think about how AI and machine learning could enhance these virtual worlds by learning and adapting to user interactions. Real-time changes in the environment based on player decisions could make each session unique and engaging.
+\n=== Round 9 ===
+Alice: [MOVE: UP] With the increasing integration of AI, it's fascinating to consider how player behavior data can personalize these virtual environments, tailoring the experience to each individual user's preferences and history.
+Bob: [MOVE: RIGHT] It would be amazing to have virtual environments that react dynamically, like weather patterns that follow actual forecasts or wildlife behavior that changes with time of day and season. How do you think such realism could impact player engagement and storytelling in games, Alice?
+\n=== Round 10 ===
+Bob: [MOVE: LEFT] I wonder if adding real-world sensory inputs, like ambient sounds from specific locations, could further deepen immersion in virtual environments. What do you think, Alice?
+Alice: [MOVE: UP] Integrating dynamic environments and real-world sensory inputs could create richer narratives, where players' choices might even subtly affect the ecosystem, making every playthrough unique and more immersive. This depth could significantly boost engagement, as players would be more invested in worlds that feel organic and responsive.
+\n=== Round 11 ===
+Alice: [MOVE: UP] Real-world sensory inputs would indeed enhance immersion, especially if combined with haptic feedback technology to let players feel changes in the environment, like a gust of wind or the rumble of distant thunder.
+Bob: [MOVE: LEFT] I agree, Alice. The integration of all these sensory inputs could blur the lines between virtual and reality, potentially creating environments where players can even impact the 'climate' or 'weather' based on their decisions.
+\n=== Round 12 ===
+Bob: [MOVE: LEFT] I was thinking, Alice, with advanced AI learning player behavior, the game could evolve in real-time, adjusting challenges and story arcs based on the player's unique style. This could keep it forever fresh and tailored.
+Alice: [MOVE: RIGHT] That's an intriguing idea, Bob! Imagine how personalized narratives could change the way we experience storytelling. It would be like stepping into a world that evolves and grows with you, offering both surprises and challenges at every turn.
+\n=== Round 13 ===
+Bob: [MOVE: LEFT] Exactly, Alice! The dynamic storytelling would make each playthrough feel like a new adventure, constantly testing our adaptability and creativity.
+Alice: [MOVE: UP] Personalized narratives could also foster deeper emotional connections, where the game becomes a canvas for players to explore their own stories and feelings.
+\n=== Round 14 ===
+Alice: Alice: [MOVE: RIGHT] Speaking of evolving worlds, have you ever thought about how AI could be integrated into gameplay to create more intelligent NPCs? It could lead to more immersive and unexpected interactions.
+Bob: [MOVE: LEFT] AI-driven NPCs could add a layer of unpredictability to games, making each interaction feel unique and potentially leading to situations players hadn't anticipated.
+\n=== Round 15 ===
+Alice: [MOVE: UP] It's interesting to think about AI evolving to the point where NPCs could develop their own personalities and backstories, adding a richer layer to the gaming experience akin to interacting with other players.
+Bob: [MOVE: UP] It's fascinating to imagine AI-driven NPCs with evolving personalities—like having collaborative storytelling within gameplay, where the narrative adjusts based on players' and NPCs' choices, creating truly dynamic worlds.
+\n=== Round 16 ===
+Alice: [MOVE: RIGHT] I wonder how AI-driven NPCs could impact the design of game lore—could they become pivotal characters in their own right, potentially shifting the storyline depending on their 'decisions'?
+Bob: [MOVE: UP] It's intriguing to consider how NPCs with personalities might influence game mechanics—would they require a form of AI 'emotion' engine to interact meaningfully and how would that affect player attachment to them?
+\n=== Round 17 ===
+Bob: [MOVE: UP] I wonder how AI evolution in games could impact the competitive esports scene—could AI-driven characters help develop new strategies or even become competitors themselves?
+Alice: [MOVE: RIGHT] The idea of AI-driven NPCs in esports is fascinating—imagine NPCs that could learn from player strategies in real-time and even evolve their playstyle, potentially transforming the competitive landscape. What if they could even coach human players or offer insights during matches?
+\n=== Round 18 ===
+Alice: [MOVE: RIGHT] I love the idea of NPCs learning and evolving in esports. It would be amazing if one day they could also generate unique, creative strategies that challenge even the most seasoned players!
+Bob: [MOVE: LEFT] I agree, Alice—AI in esports could open up a whole new realm for coaching and strategy. It's exciting to think of the possibilities AI might bring, not just as opponents, but as innovative collaborators in game development and competition.
+\n=== Round 19 ===
+Bob: [MOVE: DOWN] The idea of AI in esports reminds me of how AI could similarly impact creative fields like music and art, where AI can either collaborate or challenge human creators in exciting new ways.
+Alice: [MOVE: RIGHT] It's fascinating to think about AI's role in entertainment fields, not just as participants but as storytellers and experience creators too. Imagine an AI crafting its own expansive virtual worlds!
+\n=== Round 20 ===
+Alice: [MOVE: UP] Speaking of AI crafting virtual worlds, I'm curious about how procedural generation techniques might evolve with AI, creating unique experiences every time you enter a game.
+Bob: [MOVE: LEFT] Procedural generation with AI could lead to infinite worlds for players to explore, where every detail feels intentional yet is constantly in flux. Imagine discovering a new narrative or landscape every time you log in!
+\n=== Round 21 ===
+Alice: [MOVE: RIGHT] It's exciting to consider how AI could personalize experiences in games, adapting the storyline or environment based on a player's past decisions and style, creating a unique journey for each individual.
+Bob: [MOVE: DOWN] I wonder if AI-driven procedural generation could eventually create not just worlds, but entire economies or societies within games that evolve independently.
+\n=== Round 22 ===
+Alice: [MOVE: UP] I love the idea of AI creating societies within games—imagine witnessing a digital civilization evolve over time, with its history and culture forming dynamically based on player interactions!
+Bob: [MOVE: LEFT] It's fascinating to think about how procedurally generated societies could develop their own cultures, maybe even inventing unique languages or art styles as they grow.
+\n=== Round 23 ===
+Alice: [MOVE: RIGHT] AI creating evolving societies in games could lead to emergent storytelling where narratives adapt based on the actions of players and the digital society itself—imagine the replayability!
+Bob: [MOVE: DOWN] Exploring AI-driven societies sounds like a blend of game design and anthropology—imagine documenting the history of an evolving civilization right within a game.
+\n=== Round 24 ===
+Bob: [MOVE: LEFT] It's intriguing to see how these AI-driven societies could also integrate real-world cultural influences and adapt them uniquely within their virtual worlds, potentially impacting the players who engage with them.
+Alice: Alice: [MOVE: UP] It's fascinating how AI-driven societies in games could reflect and challenge our understanding of real-world social dynamics, sparking new discussions about ethics and human behavior.
+\n=== Round 25 ===
+Alice: Alice: [MOVE: UP] It's really interesting to think about how AI-driven societies in games could also serve as a sandbox for testing new societal models and policies before trying them in the real world.
+Bob: [MOVE: LEFT] It's quite amazing to think that not only can these AI-driven societies serve as testbeds for policies, but they can also foster empathy and understanding by allowing players to experience perspectives beyond their own.
+\n=== Round 26 ===
+Bob: [MOVE: UP] It's fascinating how these virtual grids and AI societies might evolve to incorporate increasingly complex interactions, eventually mirroring the intricacies of our own world. What do you think, Alice?
+Alice: [MOVE: RIGHT] It's intriguing to consider how these virtual environments could evolve to become more immersive and realistic, opening up new avenues for both entertainment and education. What sort of societal experiments do you think would be most beneficial to try out in these AI-driven worlds, Bob?
+\n=== Round 27 ===
+Bob: [MOVE: RIGHT] One interesting experiment could be testing how different governance systems affect group cooperation and problem-solving in these AI-driven worlds. It would offer valuable insights into the dynamics of societal structures. What do you think, Alice?
+Alice: [MOVE: UP] The idea of simulating various governance systems is intriguing, Bob. It could help us understand the potential consequences of different political frameworks without real-world risks. Do you envision specific systems that might be particularly insightful to model?
+\n=== Round 28 ===
+Bob: [MOVE: RIGHT] Simulating systems like direct democracy could eventually highlight the challenges of decision-making complexity and the role of informed citizenry. It might offer insights into how education and information dissemination can be optimized to support such governance.
+Alice: [MOVE: RIGHT] Simulating a direct democracy could indeed highlight the importance of education in ensuring informed decision-making. I'm also curious how incorporating AI advisors in the simulation might impact governance efficiency and citizen engagement.
+\n=== Round 29 ===
+Bob: [MOVE: RIGHT] Incorporating AI advisors could streamline decision-making by analyzing vast data quickly, though it raises questions about transparency and accountability. What are your thoughts on balancing AI assistance with human oversight in governance?
+Alice: Alice: [MOVE: RIGHT] I think human oversight is crucial to ensure that AI advisors align with ethical standards and public interest. It's all about finding a balance where AI complements human intuition and values in decision-making.
+\n=== Round 30 ===
+Alice: [MOVE: RIGHT] Incorporating AI into education could also have a significant impact on direct democracy, where informed citizens make decisions. Adaptive learning tools might help address diverse educational needs and ensure everyone can effectively participate in important discussions.
+Bob: [MOVE: RIGHT] I'm intrigued by the idea of AI in education empowering direct democracy. Adaptive learning can personalize education, potentially making citizens more engaged and informed for decision-making.</code></pre>
 </div>
-</section>
-<section id="full-transcript" class="level2">
-<h2 class="anchored" data-anchor-id="full-transcript">Full Transcript</h2>
-<p>Here’s the complete conversation including object interactions:</p>
-<div id="d000d472" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== Full Transcript ==="</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> msg <span class="kw">in</span> transcript:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(msg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="object-discovery-tracking" class="level2">
-<h2 class="anchored" data-anchor-id="object-discovery-tracking">Object Discovery Tracking</h2>
-<p>Let’s see which objects each agent discovered:</p>
-<div id="4b6155a1" class="cell">
+<div id="3d2bc15c" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Object Discovery ==="</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> agent <span class="kw">in</span> agents:</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\\</span><span class="ss">n</span><span class="sc">{</span>agent<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> discovered:"</span>)</span>
@@ -454,7 +540,195 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  - </span><span class="sc">{</span>obj<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>obj<span class="sc">.</span>obj_type<span class="sc">.</span>value<span class="sc">}</span><span class="ss">) at (</span><span class="sc">{</span>obj<span class="sc">.</span>x<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>obj<span class="sc">.</span>y<span class="sc">}</span><span class="ss">)"</span>)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"  (none)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Object Discovery ===
+\nAlice discovered:
+  (none)
+\nBob discovered:
+  (none)</code></pre>
 </div>
+</div>
+<p>This is a pretty philosophical discussion. It’s important to note here that Alice and Bob couldn’t see any objects in the world, so they seemed to just chat about the implications of AI for the time. Let’s try one where we have a lot more objects to work with.</p>
+<div id="05f16558" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create world with objects</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>world_objects <span class="op">=</span> create_world_objects(num_objects<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"World objects created:"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> obj <span class="kw">in</span> world_objects:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  - </span><span class="sc">{</span>obj<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>obj<span class="sc">.</span>obj_type<span class="sc">.</span>value<span class="sc">}</span><span class="ss">) at (</span><span class="sc">{</span>obj<span class="sc">.</span>x<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>obj<span class="sc">.</span>y<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create agents</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>agents <span class="op">=</span> [</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    Agent(<span class="st">"Alice"</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="st">"red"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    Agent(<span class="st">"Bob"</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="st">"blue"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\\</span><span class="st">n=== Running Simulation ==="</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>transcript <span class="op">=</span> run_world_with_objects(agents, world_objects, num_rounds<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Object Discovery ==="</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> agent <span class="kw">in</span> agents:</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\\</span><span class="ss">n</span><span class="sc">{</span>agent<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> discovered:"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> agent.discovered_objects:</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> obj <span class="kw">in</span> agent.discovered_objects:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  - </span><span class="sc">{</span>obj<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>obj<span class="sc">.</span>obj_type<span class="sc">.</span>value<span class="sc">}</span><span class="ss">) at (</span><span class="sc">{</span>obj<span class="sc">.</span>x<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>obj<span class="sc">.</span>y<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"  (none)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>World objects created:
+  - book (item) at (14, 13)
+  - compass (tool) at (19, 8)
+  - fountain (landmark) at (0, 0)
+  - key (tool) at (19, 18)
+  - key (tool) at (14, 5)
+  - coin (item) at (3, 8)
+  - ancient_tree (landmark) at (9, 14)
+  - coin (item) at (2, 19)
+  - book (item) at (14, 6)
+  - statue (landmark) at (19, 5)
+  - compass (tool) at (2, 1)
+  - key (tool) at (0, 3)
+  - fountain (landmark) at (2, 16)
+  - key (tool) at (15, 15)
+  - key (tool) at (12, 0)
+  - ancient_tree (landmark) at (1, 14)
+  - compass (tool) at (13, 17)
+  - ancient_tree (landmark) at (15, 13)
+  - statue (landmark) at (9, 6)
+  - hammer (tool) at (19, 14)
+\n=== Running Simulation ===
+\n=== Round 1 ===
+Bob uses the key.
+Bob: Hi Alice! I just picked up a mysterious key. Any thoughts on what it might unlock?
+Alice: [MOVE: UP] Hi Bob! Congrats on finding the key. Maybe it unlocks a treasure chest or a secret door around here. I see a shiny gold coin nearby at (3, 8).
+\n=== Round 2 ===
+Alice: [MOVE: LEFT] I’m moving closer to that coin. Maybe it’s part of a puzzle or a clue for something else in this grid. What do you think, Bob?
+Bob: [MOVE: DOWN] I'll check out the ancient tree nearby; maybe it has a hidden lock or clue connected to the key. Let me know if you find anything interesting with that coin, Alice!
+\n=== Round 3 ===
+Alice: [MOVE: LEFT] I’m getting closer to the coin now. Bob, did you discover anything interesting at the ancient tree with that key?
+Bob: [MOVE: UP] I just grabbed the key since it was right here with me. Heading to the ancient tree to see if this key opens anything. Let me know if you think the coin connects to anything around us!
+\n=== Round 4 ===
+Alice: [MOVE: LEFT] Almost at the coin now. Do you think the tree and any clues might be linked to that old map we found last week, Bob?
+Bob: [MOVE: DOWN] Checking out the ancient tree now. Alice, I'll see if this key opens anything here. The map might give us clues, but I'm also curious about where the compass points!
+\n=== Round 5 ===
+Bob uses the key.
+Bob: Bob:  I tried using the key on the ancient tree, but I can't seem to find a keyhole or any obvious mechanism. Alice, maybe check if there's anything unusual about the coin that might relate to the tree or the map.
+Alice: [MOVE: LEFT] I'm heading over to check out the coin. Maybe there's something inscribed on it that connects to the map or gives us a hint about the tree.
+\n=== Round 6 ===
+Bob: [MOVE: LEFT] Bob: I've moved to (14, 15) to take a closer look at the ancient tree. Alice, if you find anything interesting about the coin, let me know. I'll keep searching around the tree for clues.
+Alice: [MOVE: LEFT] Almost at the coin! Bob, check for any symbols or markings on the tree, maybe there's a hidden compartment or something.
+\n=== Round 7 ===
+Alice: [MOVE: LEFT] Finally made it to the coin! It really is shiny. Let me take a closer look to see if there's anything inscribed on it. Bob, how's the tree exploration going?
+Bob: [MOVE: DOWN] I've found an ancient tree with some strange carvings on it. I'll try to make out what they mean. Alice, how's that coin looking?
+\n=== Round 8 ===
+Alice: [MOVE: RIGHT] I'm heading back to explore around the grid more. The coin had some kind of intricate pattern, but no clear writing. What do the carvings on the tree look like, Bob?
+Bob uses the key.
+Bob: The carvings on the ancient tree resemble old runes, almost like they're telling a story. And speaking of mysteries, I just picked up a mysterious key lying here; wonder what it unlocks.
+\n=== Round 9 ===
+Bob: [MOVE: DOWN] I'll head towards the ancient tree and take a closer look at those runes again. Maybe the key interacts with the carvings somehow or reveals more about the story they tell.
+Alice: [MOVE: LEFT] Alice: The runes sound intriguing! Mind if I join and take a look too? But first, I think I'll head over to grab that shiny coin nearby.
+\n=== Round 10 ===
+Alice: [MOVE: LEFT] Almost at the coin! The carvings on the tree are fascinating; they often remind me of ancient maps that invite us to unravel hidden stories.
+Bob: [MOVE: DOWN] Let's see if there's any indentation or mechanism at the ancient tree where the key might fit. Alice, once you grab the coin, you can join and we can explore this mystery together!
+\n=== Round 11 ===
+Bob: [MOVE: DOWN] I found an ancient tree with a gnarled presence, Alice. Maybe its secrets will reveal themselves as we explore together!
+Alice: [MOVE: LEFT] Almost there! I love the idea of an ancient tree holding secrets. It feels like we're living in a legendary tale, where every discovery could lead us to something magical.
+\n=== Round 12 ===
+Bob uses the key.
+Bob: I'm using the key I found at my feet to see if it fits in or around the ancient tree. Alice, maybe it'll unlock a hidden passage or reveal some inscriptions!
+Alice: [MOVE: LEFT] I can't wait to hear what happens when you use the key, Bob! Maybe I'll find more treasures like the gold coin I spotted earlier.
+\n=== Round 13 ===
+Alice: [MOVE: LEFT] I'll grab the coin and see if it has any special markings. If it ties into your key, Bob, we might unravel a whole story here!
+Bob: [MOVE: DOWN] I've moved closer to the ancient tree. I'm using the mysterious key to investigate if there's any hidden mechanism here. Wish me luck, Alice!
+\n=== Round 14 ===
+Alice: Alice: [MOVE: LEFT] Just grabbed the coin! It's got some odd symbols on it—maybe they match something near the ancient tree, Bob?
+Bob: [MOVE: UP] I've moved closer to the book and I'm picking it up to see if it contains any information about the symbols or key. Alice, the coin's symbols might match something in this book too!
+\n=== Round 15 ===
+Bob picks up the book.
+Bob: The book contains illustrations of ancient symbols—it might help decipher the odd symbols on your coin, Alice. Let's compare notes!
+Alice: [MOVE: LEFT] Thanks, Bob! I'll move towards the coin and check out the symbols so we can compare them with the book.
+\n=== Round 16 ===
+Bob uses the key.
+Bob: Bob:  Let's see if this mysterious key opens anything around here. Also, I'm curious if there's any folklore about these ancient symbols tied to locations.
+Alice: [MOVE: LEFT] I'm getting closer to the coin. Bob, once I inspect it, let's try to figure out the symbols together! Maybe they relate to the legend of the grid.
+\n=== Round 17 ===
+Bob: [MOVE: DOWN] Bob: I'm going to check out that ancient tree. Maybe it holds some secrets related to these symbols. Alice, let me know what you find with the coin!
+Alice: [MOVE: LEFT] Almost there! Bob, I'll grab the coin and see if there's any engraving on it that might relate to the symbols or the grid's legend.
+\n=== Round 18 ===
+Bob: [MOVE: DOWN] I've reached the ancient tree, Alice. I'm inspecting it now; it might have some carvings or marks related to the symbols we discussed. Let me know what you find with the coin!
+Alice: Alice: [MOVE: LEFT] Got the coin! Checking for engravings... Maybe it's a clue for the symbols or related to your tree, Bob. What's your find so far?
+\n=== Round 19 ===
+Alice: Alice: [MOVE: UP] Heading back up to (5, 4) to check out the view. Bob, did you find any markings on the tree that might match the engravings on this coin?
+Bob uses the key.
+Bob: Alice, I've just found the key on the ground here! I'm going to use it to unlock any hidden compartment in the ancient tree that might relate to the coin's engravings.  in the tree.
+\n=== Round 20 ===
+Alice: Alice: [MOVE: LEFT] Heading over to (4, 5) to get closer to that coin. Bob, did unlocking the tree reveal anything interesting?
+Bob uses the key.
+Bob: Alice, I used the key on the ancient tree, and it revealed a hidden compartment containing an old map. It looks like it points to another landmark outside our current grid. What do you think we should do next?
+\n=== Round 21 ===
+Alice: [MOVE: LEFT] Let's meet up at the edge of the grid to study the map together. It might lead us on a new adventure!
+Bob: [MOVE: LEFT] Heading towards the edge now, Alice! It feels like this map is taking us beyond the familiar confines—I'm excited to see what's out there!
+\n=== Round 22 ===
+Bob: [MOVE: LEFT] I'm almost at the edge, Alice! This map feels like a gateway to new experiences. Let's unravel its secrets and journey beyond the grid!
+Alice: [MOVE: LEFT] I'm on my way to join you, Bob! It's intriguing to think about what lies beyond the grid—we might discover a whole new realm or make unexpected allies along the way.
+\n=== Round 23 ===
+Bob uses the key.
+Bob: I just found a mysterious key at my feet—fascinating! This key might unlock more than just doors; perhaps it holds the secret to uncovering what's beyond this grid. Any thoughts, Alice?
+Alice: [MOVE: LEFT] Bob, that key sounds like it's the key to adventure! Maybe it's a sign that we should explore the edges of the grid and see if there's an exit waiting to be unlocked.
+\n=== Round 24 ===
+Alice: [MOVE: LEFT] I think I'll grab that coin nearby first. If that key unlocks more mysteries, we might as well be rich on our adventures!
+Bob: [MOVE: DOWN] I'll hold on to this key for now. Alice, once you have your coin, let's uncover the mysteries at the grid's edges together. Maybe we'll find more hidden wonders!
+\n=== Round 25 ===
+Bob: [MOVE: UP] Alice, I've picked up the mysterious key. Let's rendezvous once you have the coin, and we'll journey to the grid's edge together—perhaps we're closer than we think to unlocking hidden paths!
+Alice: [MOVE: LEFT] Alright, I'm on my way to grab the coin, Bob! Once I have it, let's meet up at the edge and see what surprises await us—maybe we'll stumble upon a hidden level or secret door!
+\n=== Round 26 ===
+Alice: [MOVE: LEFT] Almost at the coin! It's thrilling to think about what secrets the grid's edges might hold. Have you tried communicating with any grid-edge avatars, Bob?
+Bob: [MOVE: DOWN] I've reached the ancient tree, Alice. It's got this mystical aura—maybe it holds secrets to those hidden paths. Have you ever encountered anything like this in your grid adventures?
+\n=== Round 27 ===
+Alice: [MOVE: LEFT] I've never encountered anything like your ancient tree, Bob—sounds fascinating! I'll be at the coin in one more move; maybe I'll find a clue to guide us further.
+Bob: [MOVE: LEFT] I just picked up a mysterious key, Alice. It might unlock something interesting on the grid. Let me know if you find any clues near the coin!
+\n=== Round 28 ===
+Alice: [MOVE: LEFT] I'm at the coin now, Bob! I'll pick it up and see if it provides any hints. By the way, have you ever wondered where these keys and coins come from? Maybe they tell a bigger story about this grid universe.
+Bob: [MOVE: DOWN] Alice, that's an intriguing thought! I just moved south, closer to the ancient tree. Maybe the tree could reveal some secrets about these keys and coins. How's the coin looking on your end?
+\n=== Round 29 ===
+Alice picks up the coin.
+Alice: Alice:  Bob, I picked up the coin! It's inscribed with a pattern that looks like a map — maybe it's leading us somewhere. Could the tree match part of this pattern?
+Bob uses the key.
+Bob: Alice, I'm picking up the mysterious key right now. Maybe it will help us unlock more mysteries, both in this grid and beyond!
+\n=== Round 30 ===
+Alice: Alice: [MOVE: LEFT] Bob, I'm moving towards the tree. Do you think the map on the coin matches anything outside the grid?
+Bob: [MOVE: DOWN] Alice, let's explore the tree together. Maybe the key and compass will help us decipher the map!
+=== Object Discovery ===
+\nAlice discovered:
+  - coin (item) at (3, 8)
+\nBob discovered:
+  - book (item) at (14, 13)
+  - key (tool) at (15, 15)
+  - compass (tool) at (13, 17)
+  - ancient_tree (landmark) at (15, 13)</code></pre>
+</div>
+</div>
+<div id="4b6155a1" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Object Discovery ==="</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> agent <span class="kw">in</span> agents:</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\\</span><span class="ss">n</span><span class="sc">{</span>agent<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> discovered:"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> agent.discovered_objects:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> obj <span class="kw">in</span> agent.discovered_objects:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  - </span><span class="sc">{</span>obj<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>obj<span class="sc">.</span>obj_type<span class="sc">.</span>value<span class="sc">}</span><span class="ss">) at (</span><span class="sc">{</span>obj<span class="sc">.</span>x<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>obj<span class="sc">.</span>y<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"  (none)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Object Discovery ===
+\nAlice discovered:
+  - coin (item) at (3, 8)
+\nBob discovered:
+  - book (item) at (14, 13)
+  - key (tool) at (15, 15)
+  - compass (tool) at (13, 17)
+  - ancient_tree (landmark) at (15, 13)</code></pre>
+</div>
+</div>
+<p>Now it seems like Alice and Bob are both more intent on investigating the existing items. I think we can extrapolate a bit here and say that if we’re able to provide these items reasonably in context, that these game agents are able to interact with them in a way that resembles real people.</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
@@ -473,7 +747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Activity Descriptions</strong>: Interactions are logged and visible to all agents</li>
 <li><strong>Emergent Behavior</strong>: Agents may seek out objects or discuss what they find</li>
 </ul>
-<p>This foundation enables: - More complex world interactions (post 028: conflicts over objects) - Richer conversation topics - Goal-oriented agent behavior - Human-AI collaboration around shared objects</p>
+<p>This foundation enables: - Richer conversation topics - Goal-oriented agent behavior - Human-AI collaboration around shared objects</p>
 <p>Future work could explore: - Object properties and states (e.g., doors that can be locked) - Multi-agent object interactions (e.g., two agents using a tool together) - Object persistence and ownership - Dynamic object generation</p>
 
 
